@@ -1,0 +1,10 @@
+{
+  "javascript": {
+    "main": "http://localhost:3001/main-0e2761f5a9f39febec87.js"
+  },
+  "styles": {},
+  "assets": {},
+  "webpack": {
+    "version": "3.10.0"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "extends": [
+    "airbnb"
+    // "plugin:ava/recommended"
+  ],
+  "globals": {
+    "require": true,
+    "google": true,
+    "window": true,
+    "global": true,
+    "__DEVELOPMENT__": true,
+    "__CLIENT__": true,
+    "__SERVER__": true,
+    "__DISABLE_SSR__": true,
+    "__DEVTOOLS__": true,
+    "webpackIsomorphicTools": true
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "linebreak-style": 0,
+    "function-paren-newline": 0,
+    "import/prefer-default-export": 0,
+    "no-console": [0],
+    "quotes": [2, "single"],
+    "strict": [2, "never"],
+    "no-underscore-dangle": "off",
+    "no-undef": 1,
+    "no-unused-vars": 1,
+    "react/jsx-closing-bracket-location": [1, "after-props"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/require-default-props": [0],
+    "react/forbid-prop-types": [0]
+  },
+  "plugins": [
+    "react"
+  ]
+}
