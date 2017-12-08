@@ -12,10 +12,6 @@ import { addPostRequest, fetchPosts, deletePostRequest } from '../../PostActions
 import { getPosts } from '../../PostReducer';
 
 class PostListPage extends Component {
-  componentDidMount() {
-    // this.props.dispatch(fetchPosts());
-  }
-
   handleDeletePost = (post) => {
     if (confirm('Do you want to delete this post')) { // eslint-disable-line
       this.props.dispatch(deletePostRequest(post));
@@ -39,7 +35,7 @@ class PostListPage extends Component {
 }
 
 // Actions required to provide data for this component to render in sever side.
-PostListPage.need = [() => fetchPosts()];
+PostListPage.need = ({ dispatch }, { params }) => dispatch(fetchPosts(params));
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
@@ -56,7 +52,6 @@ PostListPage.propTypes = {
       slug: PropTypes.string.isRequired,
       cuid: PropTypes.string.isRequired,
     })).isRequired,
-  // showAddPost: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

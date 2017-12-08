@@ -1,6 +1,12 @@
 // Webpack config for development
 require('dotenv').config();
 
+// https://github.com/halt-hammerzeit/webpack-isomorphic-tools
+const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
+const webpackIsomorphicPackage = require('./webpack.isomorphic.tools');
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 const path = require('path');
 const webpack = require('webpack');
 
@@ -12,12 +18,11 @@ module.exports = {
     ],
   },
   output: {
+    path: path.resolve(__dirname, '../public/dist'), // assets path
+    publicPath: './dist/',
     filename: '[name].js',
     chunkFilename: '[name].js',
-    publicPath: './dist/',
-    path: path.resolve(__dirname, '../public/dist'), // assets path
   },
-  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -40,11 +45,16 @@ module.exports = {
       { test: /\.json$/, loader: 'json' },
     ],
   },
-
   plugins: [
+    new ExtractTextPlugin('main.[contenthash:20].css'),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.IgnorePlugin(/\.\/dev/, /\/config$/),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       comments: false,
+      warnings: false,
     }),
+    new WebpackIsomorphicToolsPlugin(webpackIsomorphicPackage).development(false),
   ],
+  devtool: 'source-map',
 };

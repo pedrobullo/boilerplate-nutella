@@ -4,16 +4,14 @@ import bodyParser from 'body-parser';
 import * as clientConfig from '../common/config';
 // import * as serverConfig from './config';
 
-import appRouting from './appRouting';
-import appLog from './logs';
+import appRouting from './lib/appRouting';
+import appLog from './lib/appLogs';
 
 // Initialize the Express App
 const app = new Express();
 
 // Winston Logging - must set process.env logger (bool)
 process.on('uncaughtException', (err) => {
-  if (!process.env.logger) return;
-
   const parsedError = {};
 
   Object.getOwnPropertyNames(err).forEach((key) => {

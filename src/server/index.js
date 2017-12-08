@@ -1,7 +1,7 @@
 import path from 'path';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 import dotenv from 'dotenv';
-import WebpackIsomorphicToolsConfig from './../../webpack/webpack.isomorphic-tools';
+import WebpackIsomorphicToolsConfig from './../../webpack/webpack.isomorphic.tools';
 import * as server from './server';
 
 dotenv.config();

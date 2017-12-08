@@ -10,14 +10,13 @@
     "development": {
       "plugins": [
         "react-hot-loader/babel",
-        "typecheck",
         ["react-transform", {
-            "transforms": [
-              {
-                "transform": "react-transform-catch-errors",
-                "imports": ["react", "redbox-react"]
-              }
-            ]
+          "transforms": [
+            {
+              "transform": "react-transform-catch-errors",
+              "imports": ["react", "redbox-react"]
+            }
+          ]
         }]
       ]
     }

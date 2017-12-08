@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import 'flexboxgrid';
 import Helmet from 'react-helmet';
-
-// import './App.scss';
+import { renderRoutes } from 'react-router-config';
+// import 'flexboxgrid';
 // import './sweetalert2.scss';
 
+const styles = {}; // require('./App.scss');
+
 const App = props => (
-  <div>
+  <div className={styles.container}>
     <Helmet
-      title="Service Shop - Test a"
+      title="Service Shop - Test"
       titleTemplate="%s - Service Shop"
       meta={[
         { charset: 'utf-8' },
@@ -22,17 +23,18 @@ const App = props => (
           content: 'width=device-width, initial-scale=1',
         },
       ]} />
-    <div className="container-fluid">
-      <h1>APP</h1>
-      {props.children}
-    </div>
+    <h1>APP</h1>
+    { renderRoutes(props.route.routes) }
   </div>
 );
 
-App.need = [params => () => console.log('App need params', params), params => () => console.log('App2 need params', params)];
+App.need = () => {
+  console.log('app need #1');
+  console.log('app need #2');
+};
 
 App.propTypes = {
-  children: PropTypes.object,
+  route: PropTypes.object,
 };
 
 export default App;
