@@ -6,6 +6,7 @@ import { renderRoutes } from 'react-router-config';
 // import './sweetalert2.scss';
 
 const styles = {}; // require('./App.scss');
+// import './App.scss';
 
 const App = props => (
   <div className={styles.container}>

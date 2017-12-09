@@ -31,7 +31,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.css', '.scss', '.sass'],
+    extensions: ['.js', '.jsx', '.json'], // '.css', '.scss', '.sass'
     modules: ['common', 'node_modules'],
   },
   output: {
@@ -51,7 +51,7 @@ module.exports = {
         exclude: [/node_modules/, /public/],
       },
       {
-        test: /\.scss$/,
+        test: /\.(scss|sass)$/,
         use: [
           'style-loader',
           'css-loader',
@@ -80,14 +80,4 @@ module.exports = {
     new WebpackIsomorphicToolsPlugin(webpackIsomorphicPackage).development(true),
   ],
   devtool: 'inline-source-map',
-  devServer: {
-    host: 'localhost',
-    port: 3000,
-
-    historyApiFallback: true,
-    // respond to 404s with index.html
-
-    hot: true,
-    // enable HMR on the server
-  },
 };
