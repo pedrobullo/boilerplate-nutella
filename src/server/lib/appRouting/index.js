@@ -7,12 +7,10 @@ import { StaticRouter } from 'react-router';
 import { getCookiesMiddleware } from 'redux-cookies';
 import { createStore, applyMiddleware, compose } from 'redux';
 
-import log from './../logs';
+import appLog from './../appLogs';
 import renderHTML from './template';
-import routes, { getRoutes } from './../../common/routes';
-import rootReducer from './../../common/reducers';
-
-import { fetchComponentData } from './../_util/fetchData';
+import DataLoader, { fetchData } from './../../../common/lib/DataLoader';
+import rootReducer from './../../../common/reducers';
 
 export default function appRouting(req, res, next) {
   if (__DEVELOPMENT__) {
@@ -29,25 +27,23 @@ export default function appRouting(req, res, next) {
     compose(applyMiddleware(thunkMiddleware)),
   );
 
-  // TODO: HOC array of components
-  const currentRoute = getRoutes().find(_ => _.path === req.url) || {};
-  if (!currentRoute.component) {
-    return next();
-  }
-
   // TODO: Render Error / Redirect
-  return fetchComponentData(store, [currentRoute.component], req.params)
+  return fetchData(store, req.url)
     .then(() => {
       const componentHTML = renderToString(
         <Provider store={store}>
           <StaticRouter
             location={req.url}
             context={context}>
-            {routes}
+            <DataLoader />
           </StaticRouter>
         </Provider>,
       );
-      const html = renderHTML(componentHTML, store.getState(), webpackIsomorphicTools.assets());
+      const html = renderHTML(
+        componentHTML,
+        store.getState(),
+        webpackIsomorphicTools.assets(),
+      );
       return { html };
     })
     .then(({ html }) => {
@@ -60,14 +56,10 @@ export default function appRouting(req, res, next) {
     })
     .catch((error) => {
       const errorString = JSON.stringify({
-        message: `Request in ${req.location} failed.`,
+        message: `Request in ${req.url} failed.`,
         response: error,
       });
-
-      if (process.env.logging) {
-        return log.error(errorString);
-      }
-      return console.log(error); // eslint-disable-line
+      return appLog.error(errorString);
     });
 }
 

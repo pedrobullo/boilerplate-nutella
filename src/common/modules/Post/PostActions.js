@@ -1,4 +1,4 @@
-// import callApi from '../../_util/callApi';
+// import callApi from '../../util/callApi';
 
 import { postValidation } from '../../models/post';
 

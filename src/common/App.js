@@ -1,19 +1,15 @@
-/**
- * Root Component
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-// Import Routes
-import routes from './routes';
+import DataLoader from './lib/DataLoader';
 
 const App = props => (
   <Provider store={props.store}>
-    <Router>
-      {routes}
-    </Router>
+    <BrowserRouter>
+      <DataLoader />
+    </BrowserRouter>
   </Provider>
 );
 
