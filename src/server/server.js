@@ -2,13 +2,22 @@ import Express from 'express';
 import bodyParser from 'body-parser';
 
 import * as clientConfig from '../common/config';
-// import * as serverConfig from './config';
+import * as serverConfig from './config';
 
 import appRouting from './lib/appRouting';
 import appLog from './lib/appLogs';
 
 // Initialize the Express App
 const app = new Express();
+
+// FIXME:
+app.get('*/main.js', (req, res, next) => {
+  if (serverConfig.env !== 'development') {
+    req.url = `${req.url}.gz`; // eslint-disable-line no-param-reassign
+    res.set('Content-Encoding', 'gzip');
+  }
+  next();
+});
 
 // Winston Logging - must set process.env logger (bool)
 process.on('uncaughtException', (err) => {

@@ -4,7 +4,9 @@ require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 
-// https://github.com/halt-hammerzeit/webpack-isomorphic-tools
+const rootPath = path.resolve(__dirname, '..');
+const srcPath = path.resolve(rootPath, 'src');
+
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicPackage = require('./webpack.isomorphic.tools');
 
@@ -12,7 +14,7 @@ const host = (process.env.HOST || 'localhost');
 const port = (+process.env.PORT + 1) || 3001;
 
 module.exports = {
-  context: path.resolve(__dirname, '..'),
+  context: rootPath,
   entry: {
     main: [
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr', // eslint-disable-line
@@ -26,16 +28,23 @@ module.exports = {
       // bundle the client for hot reloading
       // only- means to only hot reload for successful updates
 
-      './src/client/index.js',
+      path.resolve(srcPath, 'client/index.js'),
       // the entry point of our app
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.css', '.scss', '.sass'],
-    modules: ['common', 'node_modules'],
+    modules: [
+      path.resolve(rootPath, 'node_modules'),
+      path.resolve(rootPath, 'common'),
+    ],
+    alias: {
+      client: path.resolve(srcPath, 'client'),
+      server: path.resolve(srcPath, 'server'),
+    },
+    extensions: ['.js', '.jsx', '.json', '.scss'],
   },
   output: {
-    path: path.resolve(__dirname, '../public/dist'), // assets path
+    path: path.resolve(rootPath, 'public/dist'),
     publicPath: 'http://' + host + ':' + port + '/', // eslint-disable-line
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash].js',
@@ -44,18 +53,23 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
+        exclude: [/node_modules/, /public/],
         use: [
           { loader: 'babel-loader' },
           { loader: 'eslint-loader' },
         ],
-        exclude: [/node_modules/, /public/],
+        include: [
+          path.resolve(srcPath, 'common'),
+          path.resolve(srcPath, 'server'),
+          path.resolve(srcPath, 'client'),
+        ],
       },
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'sass-loader' },
         ],
       },
       { test: /\.json$/, loader: 'json-loader' },
@@ -80,14 +94,4 @@ module.exports = {
     new WebpackIsomorphicToolsPlugin(webpackIsomorphicPackage).development(true),
   ],
   devtool: 'inline-source-map',
-  devServer: {
-    host: 'localhost',
-    port: 3000,
-
-    historyApiFallback: true,
-    // respond to 404s with index.html
-
-    hot: true,
-    // enable HMR on the server
-  },
 };

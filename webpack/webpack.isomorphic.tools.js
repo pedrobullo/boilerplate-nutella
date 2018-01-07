@@ -1,7 +1,6 @@
-/* eslint-disable */
 const plugin = require('webpack-isomorphic-tools/plugin');
 
-module.exports = {
+const config = {
   webpackAssetsFilePath: '../webpack-assets.json',
   webpackStatsFilePath: '../webpack-stats.json',
   assets: {
@@ -9,25 +8,27 @@ module.exports = {
       extensions: ['scss'],
       filter: (module, regex, options, log) => {
         if (options.development) {
-          return plugin.styleLoaderFilter(module, regex, options, log)
+          return plugin.styleLoaderFilter(module, regex, options, log);
         }
 
-        return regex.test(module.name)
+        return regex.test(module.name);
       },
       path: (module, options, log) => {
         if (options.development) {
-          return plugin.styleLoaderPathExtractor(module, options, log)
+          return plugin.styleLoaderPathExtractor(module, options, log);
         }
 
-        return module.name
+        return module.name;
       },
       parser: (module, options, log) => {
         if (options.development) {
-          return plugin.cssModulesLoaderParser(module, options, log)
+          return plugin.cssModulesLoaderParser(module, options, log);
         }
 
-        return module.source
-      }
-    }
-  }
+        return module.source;
+      },
+    },
+  },
 };
+
+module.exports = config;

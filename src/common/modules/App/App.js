@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { renderRoutes } from 'react-router-config';
-// import 'flexboxgrid';
-// import './sweetalert2.scss';
 
-const styles = {}; // require('./App.scss');
+import './sweetalert2.scss';
+import styles from './App.scss';
 
 const App = props => (
   <div className={styles.container}>
