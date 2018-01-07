@@ -11,6 +11,8 @@ import { addPostRequest, fetchPosts, deletePostRequest } from '../../PostActions
 // Import Selectors
 import { getPosts } from '../../PostReducer';
 
+import './PostListPage.scss';
+
 class PostListPage extends Component {
   handleDeletePost = (post) => {
     if (confirm('Do you want to delete this post')) { // eslint-disable-line
@@ -24,8 +26,8 @@ class PostListPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Post List</h1>
+      <div className="PostPage">
+        <h1 className="title">Post List</h1>
         <PostList
           handleDeletePost={this.handleDeletePost}
           posts={this.props.posts} />

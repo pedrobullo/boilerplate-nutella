@@ -1,9 +1,16 @@
 {
   "javascript": {
-    "main": "http://localhost:3001/main-f7b2150ce33ea3d1ea05.js"
+    "main": "http://localhost:3001/main-48ef31a3043490382d3a.js"
   },
   "styles": {},
-  "assets": {},
+  "assets": {
+    "C:/Users/Pedro/WebstormProjects/earlygame-renew/src/common/modules/App/App.scss": {
+      "_style": ".container {\n  padding: 20px; }\n"
+    },
+    "C:/Users/Pedro/WebstormProjects/earlygame-renew/src/common/modules/Post/pages/PostListPage/PostListPage.scss": {
+      "_style": ".CartPage .CartPage-title {\n  position: relative;\n  padding: 15px;\n  background-color: #f6f8fa;\n  border: 1px solid rgba(27, 31, 35, 0.15);\n  border-radius: 3px 3px 0 0;\n  font-size: 18px;\n  font-family: monospace; }\n"
+    }
+  },
   "webpack": {
     "version": "3.10.0"
   }

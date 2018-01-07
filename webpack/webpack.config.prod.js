@@ -10,16 +10,19 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
+const rootPath = path.resolve(__dirname, '..');
+const srcPath = path.resolve(rootPath, 'src');
+
 module.exports = {
-  context: path.resolve(__dirname, '..'),
+  context: rootPath,
   entry: {
     main: [
-      './client/index.js',
+      path.resolve(srcPath, 'client/index.js'),
     ],
   },
   output: {
-    path: path.resolve(__dirname, '../public/dist'), // assets path
-    publicPath: './dist/',
+    path: path.resolve(rootPath, 'public/dist'),
+    publicPath: path.resolve(rootPath, 'public/dist'),
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
@@ -33,7 +36,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(sass|scss|css)$/, // Check for sass or scss file names
+        test: /\.(sass|scss|css)$/,
         use: [
           'style-loader',
           'css-loader',
