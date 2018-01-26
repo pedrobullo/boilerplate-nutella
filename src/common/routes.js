@@ -8,22 +8,12 @@ export default [
     component: App,
     routes: [
       {
-        path: '/',
-        component: App,
-        exact: true,
-      },
-      {
         path: '/posts',
         component: PostListPage,
         routes: [
           {
-            path: '/posts',
+            path: '/posts/list',
             component: PostListIndex,
-            exact: true,
-          },
-          {
-            path: '/blog/:slug',
-            // component: Postetails,
             exact: true,
           },
           {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { renderRoutes } from 'react-router-config';
+import { renderRoutes as renderSubRoutes } from 'react-router-config';
 
 import './sweetalert2.scss';
 import styles from './App.scss';
@@ -23,7 +23,7 @@ const App = props => (
         },
       ]} />
     <h1>APP</h1>
-    { renderRoutes(props.route.routes) }
+    { renderSubRoutes(props.route.routes) }
   </div>
 );
 
