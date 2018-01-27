@@ -10,6 +10,10 @@ import appLog from './lib/appLogs';
 // Initialize the Express App
 const app = new Express();
 
+app.get('/favicon.ico', (req, res) => {
+  res.status(204);
+});
+
 // FIXME:
 app.get('*/main.js', (req, res, next) => {
   if (serverConfig.env !== 'development') {

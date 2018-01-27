@@ -29,7 +29,6 @@ const App = props => (
 
 App.need = () => {
   console.log('app need #1');
-  console.log('app need #2');
 };
 
 App.propTypes = {

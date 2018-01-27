@@ -9,11 +9,10 @@
   "scripts": {
     "start": "npm run production",
     "dev": "concurrently --kill-others \"better-npm-run watch-client\" \"better-npm-run start-dev\"",
+    "startDev": "concurrently --kill-others \"better-npm-run start-dev\"",
+    "watchDev": "concurrently --kill-others \"better-npm-run watch-client\"",
     "lint": "eslint common server client --ignore-pattern __tests__ --ignore-pattern '/tests/'",
-    "test": "better-npm-run test",
-    "startDev": "concurrently --kill-others \"yarn run watch\" \"yarn run build --watch\"",
-    "watch": "nodemon --watch build ./build/server.js ./build/stats.json",
-    "build": "NODE_ENV=development webpack"
+    "test": "better-npm-run test"
   },
   "betterScripts": {
     "start-dev": {
