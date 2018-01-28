@@ -1,11 +1,12 @@
 // Webpack config for development
 require('dotenv').config();
 
+const CleanPlugin = require('clean-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicPackage = require('./webpack.isomorphic.tools');
-
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const path = require('path');
 const webpack = require('webpack');
@@ -22,7 +23,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(rootPath, 'public/dist'),
-    publicPath: path.resolve(rootPath, 'public/dist'),
+    publicPath: './dist/',
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
@@ -38,7 +39,6 @@ module.exports = {
       {
         test: /\.(sass|scss|css)$/,
         use: [
-          'style-loader',
           'css-loader',
           'sass-loader',
         ],
@@ -49,15 +49,43 @@ module.exports = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin('main.[contenthash:20].css'),
-    new webpack.optimize.OccurrenceOrderPlugin(),
+    new CleanPlugin([
+      path.resolve(rootPath, 'public/dist'),
+      path.resolve(rootPath, './dist/'),
+    ], { root: rootPath }),
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.ENVIRONMENT),
+        REDIRECTS_BASE_URL: JSON.stringify(process.env.REDIRECTS_BASE_URL),
+        ZED_AUTH_SECRET: JSON.stringify(process.env.ZED_AUTH_SECRET),
+        FACEBOOK_API_KEY: JSON.stringify(process.env.FACEBOOK_API_KEY),
+        HOST_NAME: JSON.stringify(process.env.HOST_NAME),
+      },
+      __CLIENT__: true,
+      __SERVER__: false,
+      __DEVELOPMENT__: false,
+      __DEVTOOLS__: false,
+    }),
+
+    // ignore dev config
     new webpack.IgnorePlugin(/\.\/dev/, /\/config$/),
+
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
-      comments: false,
-      warnings: false,
+      compress: {
+        warnings: true,
+      },
     }),
-    new WebpackIsomorphicToolsPlugin(webpackIsomorphicPackage).development(false),
+
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$/,
+      threshold: 500,
+    }),
+
+    new WebpackIsomorphicToolsPlugin(webpackIsomorphicPackage),
   ],
   devtool: 'source-map',
 };
