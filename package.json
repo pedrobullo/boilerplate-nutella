@@ -32,12 +32,13 @@
     "start-prod": {
       "command": "node ./dist/server/index",
       "env": {
+        "NODE_ENV": "production",
         "NODE_PATH": "./src",
         "PORT": 8080
       }
     },
     "build-js": {
-      "command": "webpack --colors --display-error-details --config webpack/webpack.config.prod.js"
+      "command": "webpack --verbose --colors --display-error-details --config webpack/webpack.config.prod.js"
     },
     "build-app": {
       "command": "babel ./server -d ./dist/server && babel ./client -d ./dist/client && babel ./webpack -d ./dist/webpack && babel ./common -d ./dist/common && cp webpack-assets.json ./dist/webpack-assets.json"

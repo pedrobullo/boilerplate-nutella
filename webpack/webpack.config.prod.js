@@ -43,10 +43,12 @@ module.exports = {
           'sass-loader',
         ],
       },
+      { test: /\.json$/, loader: 'json-loader' },
     ],
-    loaders: [
-      { test: /\.json$/, loader: 'json' },
-    ],
+  },
+  resolve: {
+    modules: ['common', 'node_modules'],
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
     new CleanPlugin([
@@ -56,10 +58,8 @@ module.exports = {
 
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.ENVIRONMENT),
-        REDIRECTS_BASE_URL: JSON.stringify(process.env.REDIRECTS_BASE_URL),
-        ZED_AUTH_SECRET: JSON.stringify(process.env.ZED_AUTH_SECRET),
-        FACEBOOK_API_KEY: JSON.stringify(process.env.FACEBOOK_API_KEY),
+        NODE_ENV: JSON.stringify('production'),
+        FACEBOOK_API_KEY: JSON.stringify(process.env.FACEBOOK_API_KEY), // TODO
         HOST_NAME: JSON.stringify(process.env.HOST_NAME),
       },
       __CLIENT__: true,
