@@ -5,13 +5,12 @@
   "main": "./src/server/index.js",
   "name": "boilerplate-nutella",
   "version": "1.0.0",
-  "description": "test + hot reload boilerplate + custom configs",
+  "description": "SSR plus Webpack ready.",
   "scripts": {
     "dev": "concurrently --kill-others \"better-npm-run watch-client\" \"better-npm-run start-dev\"",
-    "production": "npm run clean && better-npm-run build-js && better-npm-run build-app && better-npm-run start-prod",
+    "production": "better-npm-run build-js && better-npm-run build-app && better-npm-run start-prod",
     "lint": "eslint common server client --ignore-pattern __tests__",
     "test": "better-npm-run test",
-    "clean": "rimraf dist",
     "prod": "better-npm-run build-js"
   },
   "betterScripts": {
