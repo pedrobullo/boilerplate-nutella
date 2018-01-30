@@ -47,8 +47,11 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: ['common', 'node_modules'],
-    extensions: ['.js', '.jsx'],
+    modules: [
+      path.resolve(rootPath, 'node_modules'),
+      path.resolve(rootPath, 'common'),
+    ],
+    extensions: ['.js', '.jsx', '.json', '.scss'],
   },
   plugins: [
     new CleanPlugin([

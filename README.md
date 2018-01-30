@@ -8,8 +8,7 @@ Clean environment / Isomorphic solution / Scaleable / Testable
 
 ### TODOS
 - Service Worker
-- Scss :(
-- Dynamic Meta Tag @ routes definition
+- Dynamic Routing Helmet configuration
 
 #### Folder Structure (TBD)
 Modular Structure, Domain-based (http://mern.io modular structure)
