@@ -1,5 +1,4 @@
 FROM node
-MAINTAINER pedro <pedro.bj@hotmail.com>
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

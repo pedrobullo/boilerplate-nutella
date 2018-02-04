@@ -2,7 +2,7 @@
 
 import { postValidation } from '../../models/post';
 
-const swal = typeof window !== 'undefined' ? require('sweetalert2') : fn => fn();
+import swal from 'sweetalert2';
 
 // Export Constants
 export const ADD_POST = 'ADD_POST';
@@ -44,9 +44,7 @@ export const savePost = (post) => {
     const errors = validateSchema.errors.map(error => error.message);
     const errorMsg = `${errors.join('<br/>')}`;
 
-    if (swal) {
-      swal('Erro', errorMsg, 'error').catch(swal.noop);
-    }
+    swal('Erro', errorMsg, 'error').catch(swal.noop);
   }
 
   return addPost(post);

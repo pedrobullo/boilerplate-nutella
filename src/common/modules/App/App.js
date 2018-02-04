@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { renderRoutes as renderSubRoutes } from 'react-router-config';
 
-// import './sweetalert2.scss';
 // import styles from './App.scss';
 const styles = {};
 

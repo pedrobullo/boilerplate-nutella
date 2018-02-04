@@ -39,7 +39,7 @@
     "redux-thunk": "^2.2.0",
     "revalidator": "^0.3.1",
     "string-mask": "^0.3.0",
-    "sweetalert2": "^6.9.1",
+    "sweetalert2": "^7.9.2",
     "winston": "^2.4.0"
   },
   "devDependencies": {
