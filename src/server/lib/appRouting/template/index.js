@@ -1,16 +1,23 @@
 import Helmet from 'react-helmet';
 
-function javascripts(assets = {}) {
-  const js = (assets.javascript || {}).main || '';
-  const path = (js.length) ?
-    `${js.replace('./dist', '/dist')}` : '/dist/main.js';
-
-  return `<script src="${path}" async></script>`;
+function getAssets(assets = {}) {
+  if (assets.client) {
+    return ({
+      javascript: process.env.NODE_ENV === 'production'
+        ? `<script src="${assets.client.js}" defer></script>`
+        : `<script src="${assets.client.js}" defer crossorigin></script>`,
+      style: assets.client.css
+        ? `<link rel="stylesheet" href="${assets.client.css}">`
+        : ''
+    });
+  }
+  return {};
 }
 
 function renderHTML(html, initialState = {}, assets = {}) {
   console.log('Server InitialState', JSON.stringify(initialState));
   const head = Helmet.renderStatic();
+  const _assets = getAssets(assets);
   return `
 <!doctype html>
 <html>
@@ -24,13 +31,14 @@ function renderHTML(html, initialState = {}, assets = {}) {
     ${head.script.toString()}
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
+    ${_assets.style}
   </head>
   <body>
     <div id="app">${html}</div>
     <script>
       window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
     </script>
-    ${javascripts(assets)}
+    ${_assets.javascript}
   </body>
 </html>
     `;

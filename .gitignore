@@ -1,9 +1,11 @@
 node_modules
 npm-debug.log
 .DS_Store
-dist
 *.swp
 /.nyc_output/
 /coverage/
 .idea
 .vscode
+dist
+build
+public/static

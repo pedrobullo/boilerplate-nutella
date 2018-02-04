@@ -6,22 +6,20 @@ import { connect } from 'react-redux';
 import PostList from '../../components/PostList/PostList';
 
 // Import Actions
-import { addPostRequest, fetchPosts, deletePostRequest } from '../../PostActions';
+import { addPost, fetchPosts } from '../../PostActions';
 
 // Import Selectors
 import { getPosts } from '../../PostReducer';
 
-import './PostListPage.scss';
-
 class PostListPage extends Component {
   handleDeletePost = (post) => {
     if (confirm('Do you want to delete this post')) { // eslint-disable-line
-      this.props.dispatch(deletePostRequest(post));
+      console.log('dispatch delete post', post)
     }
   };
 
   handleAddPost = (name, title, content) => {
-    this.props.dispatch(addPostRequest({ name, title, content }));
+    this.props.dispatch(addPost({ name, title, content }));
   };
 
   render() {

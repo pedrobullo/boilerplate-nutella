@@ -12,13 +12,7 @@ import renderHTML from './template';
 import DataLoader, { fetchData } from './../../../common/lib/DataLoader';
 import rootReducer from './../../../common/reducers';
 
-export default function appRouting(req, res, next) {
-  if (__DEVELOPMENT__) {
-    // Do not cache webpack stats: the script file would change since
-    // hot module replacement is enabled in the development env
-    webpackIsomorphicTools.refresh();
-  }
-
+export default function appRouting(req, res) {
   const context = {};
   const cookies = new Cookies(req, res);
   const store = createStore(
@@ -26,6 +20,8 @@ export default function appRouting(req, res, next) {
     applyMiddleware(getCookiesMiddleware(cookies)),
     compose(applyMiddleware(thunkMiddleware)),
   );
+
+  const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
   // TODO: Render Error / Redirect
   return fetchData(store, req.url)
@@ -42,7 +38,7 @@ export default function appRouting(req, res, next) {
       const html = renderHTML(
         componentHTML,
         store.getState(),
-        webpackIsomorphicTools.assets(),
+        assets
       );
       return { html };
     })

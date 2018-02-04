@@ -1,10 +1,11 @@
 {
   "extends": [
-    "airbnb"
-    // "plugin:ava/recommended"
+    "plugin:react/recommended"
   ],
   "plugins": [
-    "react"
+    "react",
+    "jsx-a11y",
+    "import"
   ],
   "env": {
     "browser": true,
@@ -12,6 +13,7 @@
   },
   "parser": "babel-eslint",
   "globals": {
+    "Promise": true,
     "require": true,
     "window": true,
     "global": true,
@@ -23,7 +25,7 @@
     "webpackIsomorphicTools": true
   },
   "rules": {
-    "import/no-extraneous-dependencies": 0,    
+    "import/no-extraneous-dependencies": 0,
     "linebreak-style": 0,
     "function-paren-newline": 0,
     "import/prefer-default-export": 0,

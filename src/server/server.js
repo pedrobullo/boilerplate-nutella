@@ -2,7 +2,6 @@ import Express from 'express';
 import bodyParser from 'body-parser';
 
 import * as clientConfig from '../common/config';
-import * as serverConfig from './config';
 
 import appRouting from './lib/appRouting';
 import appLog from './lib/appLogs';
@@ -12,15 +11,6 @@ const app = new Express();
 
 app.get('/favicon.ico', (req, res) => {
   res.status(204);
-});
-
-// FIXME:
-app.get('*/main.js', (req, res, next) => {
-  if (serverConfig.env !== 'development') {
-    req.url = `${req.url}.gz`; // eslint-disable-line no-param-reassign
-    res.set('Content-Encoding', 'gzip');
-  }
-  next();
 });
 
 // Winston Logging - must set process.env logger (bool)
@@ -47,17 +37,17 @@ app.use((_, res, next) => {
   res.header('Cache-Control', 'no-cache, private');
   next();
 });
-app.use(Express.static('public'));
+app.use(Express.static(process.env.RAZZLE_PUBLIC_DIR || 'public'));
 app.use(appRouting);
 
 const PORT = clientConfig.application.port;
 
 const server = app.listen(PORT, () => {
-  console.log(`Running at: ${PORT}. 🤰`); // eslint-disable-line
+  console.log(`🤰 Running at: http://localhost:/${PORT}.`);
 });
 
 // exports app and server regularly
-module.exports = {
+export default {
   app,
-  server,
-};
+  server
+}
