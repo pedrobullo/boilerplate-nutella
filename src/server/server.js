@@ -9,10 +9,6 @@ import appLog from './lib/appLogs';
 // Initialize the Express App
 const app = new Express();
 
-app.get('/favicon.ico', (req, res) => {
-  res.status(204);
-});
-
 // Winston Logging - must set process.env logger (bool)
 process.on('uncaughtException', (err) => {
   const parsedError = {};
@@ -40,7 +36,7 @@ app.use((_, res, next) => {
 app.use(Express.static(process.env.RAZZLE_PUBLIC_DIR || 'public'));
 app.use(appRouting);
 
-const PORT = clientConfig.application.port;
+const PORT = clientConfig.application.port || 3000;
 
 const server = app.listen(PORT, () => {
   console.log(`🤰 Running at: http://localhost:/${PORT}.`);
@@ -50,4 +46,4 @@ const server = app.listen(PORT, () => {
 export default {
   app,
   server
-}
+};
