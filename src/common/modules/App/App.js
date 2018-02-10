@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { renderRoutes as renderSubRoutes } from 'react-router-config';
 
-// import styles from './App.scss';
-const styles = {};
+import './App.scss';
 
 const App = props => (
-  <div className={styles.container}>
+  <div className="container">
     <Helmet
       title="Service Shop - Test"
       titleTemplate="%s - Service Shop"
