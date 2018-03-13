@@ -14,15 +14,6 @@ app.get('/favicon.ico', (req, res) => {
   res.status(204);
 });
 
-// FIXME:
-app.get('*/main.js', (req, res, next) => {
-  if (serverConfig.env !== 'development') {
-    req.url = `${req.url}.gz`; // eslint-disable-line no-param-reassign
-    res.set('Content-Encoding', 'gzip');
-  }
-  next();
-});
-
 // Winston Logging - must set process.env logger (bool)
 process.on('uncaughtException', (err) => {
   const parsedError = {};

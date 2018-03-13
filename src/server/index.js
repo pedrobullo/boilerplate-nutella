@@ -13,5 +13,4 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV === 'development';
 
 const rootDir = path.resolve(__dirname, '../../');
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(WebpackIsomorphicToolsConfig)
-  .development(global.__DEVELOPMENT__)
   .server(rootDir, () => server);

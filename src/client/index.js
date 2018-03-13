@@ -19,5 +19,6 @@ hydrate(
 
 // For hot reloading of react components
 if (module.hot) {
+  console.log('🔁  HMR Reloading - client');
   module.hot.accept();
 }

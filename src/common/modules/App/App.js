@@ -9,8 +9,8 @@ import styles from './App.scss';
 const App = props => (
   <div className={styles.container}>
     <Helmet
-      title="Service Shop - Test"
-      titleTemplate="%s - Service Shop"
+      title="Boilerplate Nutella - Test"
+      titleTemplate="%s - Boilerplate Nutella"
       meta={[
         { charset: 'utf-8' },
         {
