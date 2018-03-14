@@ -8,8 +8,14 @@ function javascripts(assets = {}) {
   return `<script src="${path}" async></script>`;
 }
 
+function styles(assets = {}) {
+  return Object
+    .keys(assets.styles || {})
+    .map(style => `<link href="${assets.styles[style]}" media="screen, projection" rel="stylesheet" type="text/css" />`)
+    .join('');
+}
+
 function renderHTML(html, initialState = {}, assets = {}) {
-  console.log('Server InitialState', JSON.stringify(initialState));
   const head = Helmet.renderStatic();
   return `
 <!doctype html>
@@ -24,11 +30,13 @@ function renderHTML(html, initialState = {}, assets = {}) {
     ${head.script.toString()}
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
+    ${styles(assets)}
   </head>
   <body>
     <div id="app">${html}</div>
     <script>
       window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+      console.log(${JSON.stringify(assets)});
     </script>
     ${javascripts(assets)}
   </body>

@@ -9,10 +9,10 @@
   "scripts": {
     "dev": "concurrently --kill-others \"better-npm-run watch-client\" \"better-npm-run start-dev\"",
     "production": "cross-env NODE_ENV=production yarn build:client && yarn build:server && better-npm-run start-prod",
-    "lint": "eslint common server client --ignore-pattern __tests__",
-    "test": "cross-env NODE_ENV=test better-npm-run test",
     "build:server": "cross-env NODE_ENV=production webpack -p --config webpack/webpack.config.server.js",
-    "build:client": "cross-env NODE_ENV=production webpack --verbose --colors --display-error-details --config webpack/webpack.config.prod.js"
+    "build:client": "cross-env NODE_ENV=production webpack --colors --display-error-details --config webpack/webpack.config.prod.js",
+    "lint": "eslint common server client --ignore-pattern __tests__",
+    "test": "cross-env NODE_ENV=test better-npm-run test"
   },
   "betterScripts": {
     "start-dev": {

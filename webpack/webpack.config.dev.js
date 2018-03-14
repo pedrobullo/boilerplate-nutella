@@ -91,7 +91,7 @@ module.exports = {
       __DEVELOPMENT__: true,
       __DEVTOOLS__: true, // <-------- DISABLE redux-devtools HERE
     }),
-    new WebpackIsomorphicToolsPlugin(webpackIsomorphicPackage).development(true),
+    new WebpackIsomorphicToolsPlugin(webpackIsomorphicPackage).development(),
   ],
   devtool: 'inline-source-map',
 };
