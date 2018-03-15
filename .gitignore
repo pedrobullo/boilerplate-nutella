@@ -8,3 +8,4 @@ dist
 .idea
 .vscode
 webpack/webpack-assets.json
+public/webpack-assets.json
