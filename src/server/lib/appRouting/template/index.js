@@ -8,8 +8,17 @@ function javascripts(assets = {}) {
   return `<script src="${path}" async></script>`;
 }
 
+function styles(assets = {}) {
+  const css = Object
+    .keys(assets.assets || {})
+    .map(style => assets.assets[style]._style);
+  if (css.length) {
+    return `<style>${css.join('')}</style>`;
+  }
+  return '';
+}
+
 function renderHTML(html, initialState = {}, assets = {}) {
-  console.log('Server InitialState', JSON.stringify(initialState));
   const head = Helmet.renderStatic();
   return `
 <!doctype html>
@@ -24,6 +33,7 @@ function renderHTML(html, initialState = {}, assets = {}) {
     ${head.script.toString()}
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
+    ${styles(assets)}
   </head>
   <body>
     <div id="app">${html}</div>
