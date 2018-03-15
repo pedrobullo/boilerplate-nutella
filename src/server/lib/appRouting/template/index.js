@@ -9,10 +9,13 @@ function javascripts(assets = {}) {
 }
 
 function styles(assets = {}) {
-  return Object
-    .keys(assets.styles || {})
-    .map(style => `<link href="${assets.styles[style]}" media="screen, projection" rel="stylesheet" type="text/css" />`)
-    .join('');
+  const css = Object
+    .keys(assets.assets || {})
+    .map(style => assets.assets[style]._style);
+  if (css.length) {
+    return `<style>${css.join('')}</style>`;
+  }
+  return '';
 }
 
 function renderHTML(html, initialState = {}, assets = {}) {
@@ -36,7 +39,6 @@ function renderHTML(html, initialState = {}, assets = {}) {
     <div id="app">${html}</div>
     <script>
       window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-      console.log(${JSON.stringify(assets)});
     </script>
     ${javascripts(assets)}
   </body>
