@@ -1,8 +1,7 @@
 const plugin = require('webpack-isomorphic-tools/plugin');
 
 const config = {
-  webpackAssetsFilePath: './public/webpack-assets.json',
-  webpackStatsFilePath: './public/webpack-stats.json',
+  debug: true,
   assets: {
     scss: {
       extensions: ['scss'],

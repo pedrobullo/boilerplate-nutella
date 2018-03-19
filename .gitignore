@@ -7,5 +7,5 @@ dist
 /coverage/
 .idea
 .vscode
-webpack/webpack-assets.json
-public/webpack-assets.json
+webpack-assets.json
+webpack-stats.json

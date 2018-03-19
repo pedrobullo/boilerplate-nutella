@@ -1,5 +1,6 @@
 import Express from 'express';
 import bodyParser from 'body-parser';
+import path from 'path';
 
 import * as clientConfig from '../common/config';
 import * as serverConfig from './config';
@@ -38,7 +39,7 @@ app.use((_, res, next) => {
   res.header('Cache-Control', 'no-cache, private');
   next();
 });
-app.use(Express.static('public'));
+app.use(Express.static(path.join(__dirname, '../../public')));
 app.use(appRouting);
 
 const PORT = clientConfig.application.port;

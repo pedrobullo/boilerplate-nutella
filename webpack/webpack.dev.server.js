@@ -19,7 +19,6 @@ const serverOptions = {
   publicPath: webpackConfig.output.publicPath,
   headers: { 'Access-Control-Allow-Origin': '*' },
   stats: { colors: true },
-  serverSideRender: true,
 };
 
 const app = new Express();
@@ -32,7 +31,7 @@ app.listen(port, function onAppListening(err) {  // eslint-disable-line
     console.error(err);
   } else {
     /* eslint-disable */
-    console.log(`PORT ${port} ready`)
+    console.info('==> 🚧  Webpack development server listening on port %s', port);
     /* eslint-enable */
   }
 });

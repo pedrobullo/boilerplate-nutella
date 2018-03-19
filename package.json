@@ -16,7 +16,7 @@
   },
   "betterScripts": {
     "start-dev": {
-      "command": "babel-node --inspect ./src/server/index",
+      "command": "babel-node ./src/server/index",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
@@ -27,6 +27,7 @@
       "command": "babel-node ./webpack/webpack.dev.server.js",
       "env": {
         "UV_THREADPOOL_SIZE": 100,
+        "NODE_PATH": "./src",
         "PORT": 3000
       }
     },
