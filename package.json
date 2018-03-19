@@ -16,7 +16,7 @@
   },
   "betterScripts": {
     "start-dev": {
-      "command": "babel-node ./src/server/index",
+      "command": "babel-watch --watch ./src ./src/server/index",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
@@ -97,6 +97,7 @@
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
+    "babel-watch": "^2.0.7",
     "css-loader": "^0.28.7",
     "eslint": "^4.11.0",
     "eslint-config-airbnb": "^16.1.0",
