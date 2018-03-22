@@ -1,8 +1,6 @@
 import Express from 'express';
 import bodyParser from 'body-parser';
 
-import * as clientConfig from '../common/config';
-
 import appRouting from './lib/appRouting';
 import appLog from './lib/appLogs';
 
@@ -36,14 +34,4 @@ app.use((_, res, next) => {
 app.use(Express.static(process.env.RAZZLE_PUBLIC_DIR || 'public'));
 app.use(appRouting);
 
-const PORT = clientConfig.application.port || 3000;
-
-const server = app.listen(PORT, () => {
-  console.log(`🤰 Running at: http://localhost:/${PORT}.`);
-});
-
-// exports app and server regularly
-export default {
-  app,
-  server
-};
+export default app;

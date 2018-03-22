@@ -7,8 +7,8 @@
   "version": "1.0.0",
   "description": "SSR plus Webpack ready.",
   "scripts": {
-    "start": "./node_modules/.bin/razzle start",
-    "build": "./node_modules/.bin/razzle build",
+    "start": "razzle start",
+    "build": "razzle build",
     "start:prod": "cross-env NODE_ENV=production node build/server.js",
     "production": "npm run build && npm run start:prod",
     "lint": "eslint common server client --ignore-pattern __tests__",

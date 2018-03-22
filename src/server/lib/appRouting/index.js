@@ -1,7 +1,7 @@
 import React from 'react';
 import Cookies from 'cookies';
 import { Provider } from 'react-redux';
-import thunkMiddleware from 'redux-thunk';
+import thunk from 'redux-thunk';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { getCookiesMiddleware } from 'redux-cookies';
@@ -17,13 +17,13 @@ export default function appRouting(req, res) {
   const cookies = new Cookies(req, res);
   const store = createStore(
     rootReducer,
-    applyMiddleware(getCookiesMiddleware(cookies)),
-    compose(applyMiddleware(thunkMiddleware)),
+    compose(
+      applyMiddleware(thunk, getCookiesMiddleware(cookies)),
+    )
   );
 
   const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
-  // TODO: Render Error / Redirect
   return fetchData(store, req.url)
     .then(() => {
       const componentHTML = renderToString(

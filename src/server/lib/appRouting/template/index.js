@@ -15,7 +15,6 @@ function getAssets(assets = {}) {
 }
 
 function renderHTML(html, initialState = {}, assets = {}) {
-  console.log('Server InitialState', JSON.stringify(initialState));
   const head = Helmet.renderStatic();
   const _assets = getAssets(assets);
   return `
