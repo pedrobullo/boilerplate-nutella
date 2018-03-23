@@ -1,7 +1,7 @@
 const plugin = require('webpack-isomorphic-tools/plugin');
 
 const config = {
-  debug: true,
+  debug: false,
   assets: {
     scss: {
       extensions: ['scss'],

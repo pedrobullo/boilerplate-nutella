@@ -1,7 +1,6 @@
 {
   "extends": [
     "airbnb"
-    // "plugin:ava/recommended"
   ],
   "plugins": [
     "react"

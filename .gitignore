@@ -9,3 +9,4 @@ dist
 .vscode
 webpack-assets.json
 webpack-stats.json
+build/*
