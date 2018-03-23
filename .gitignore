@@ -9,3 +9,5 @@ npm-debug.log
 dist
 build
 public/static
+webpack-assets.json
+webpack-stats.json
