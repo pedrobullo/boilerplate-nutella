@@ -40,11 +40,7 @@ open http://localhost:3000
 * Webpack
 * React
 * Redux
-* [webpack-isomorphic-tools](https://github.com/catamphetamine/webpack-isomorphic-tools)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
-* [babel-watch](https://github.com/kmagiera/babel-watch) - Babel node watchable. For server bundle reload.
-* [babel-node](https://babeljs.io/docs/usage/cli) - Running ES6 on node.
-* [react-hot-loader](https://github.com/gaearon/react-hot-loader)
+* [Razzle Universal Webpack Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle)
 * [react-router](https://github.com/ReactTraining/react-router) - Declarative routing for React v4 :(. (TODO: Remove)
 * [classnames](https://github.com/JedWatson/classnames) - A simple JavaScript utility for conditionally joining classNames together. 
 * [revalidator](https://github.com/flatiron/revalidator) - JSON schema validator
