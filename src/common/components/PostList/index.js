@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Import Components
-import PostListItem from '../PostListItem/PostListItem';
+import PostListItem from '../PostListItem';
 
 function PostList(props) {
   return (
-    <div className="listView">
+    <div>
       {
         props.posts.map(post => (
           <PostListItem

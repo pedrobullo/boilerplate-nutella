@@ -10,7 +10,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import appLog from './../appLogs';
 import renderHTML from './template';
 import DataLoader, { fetchData } from './../../../common/lib/DataLoader';
-import rootReducer from './../../../common/reducers';
+import rootReducer from '../../../common/redux/reducers';
 
 export default function appRouting(req, res, next) {
   if (__DEVELOPMENT__) {

@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // Import Components
-import PostList from '../../components/PostList/PostList';
+import PostList from '../components/PostList';
 
-// Import Actions
-import { addPostRequest, fetchPosts, deletePostRequest } from '../../PostActions';
-
-// Import Selectors
-import { getPosts } from '../../PostReducer';
-
-import './PostListPage.scss';
+// Import Actions, Selectors
+import { addPostRequest, fetchPosts, deletePostRequest, getPosts } from '../redux/modules/post';
 
 class PostListPage extends Component {
   handleDeletePost = (post) => {
@@ -27,7 +22,7 @@ class PostListPage extends Component {
   render() {
     return (
       <div className="PostPage">
-        <h1 className="title">Post List</h1>
+        <h1>Post List</h1>
         <PostList
           handleDeletePost={this.handleDeletePost}
           posts={this.props.posts} />

@@ -1,7 +1,8 @@
 // import callApi from '../../util/callApi';
-
+import reducerHandler from '../utils/reducer';
 import { postValidation } from '../../models/post';
 
+// Workaround for non-universal libs
 const swal = typeof window !== 'undefined' ? require('sweetalert2') : fn => fn();
 
 // Export Constants
@@ -51,3 +52,36 @@ export const savePost = (post) => {
 
   return addPost(post);
 };
+
+// Initial State
+const initialState = { data: [] };
+
+// ------------------------------------
+// Action Handlers
+// ------------------------------------
+const ACTION_HANDLERS = {
+  [ADD_POST]: (state, action) => ({
+    data: [action.post, ...state.data],
+  }),
+
+  [ADD_POSTS]: (state, action) => ({
+    data: action.posts,
+  }),
+
+  [DELETE_POST]: (state, action) => ({
+    data: state.data.filter(post => post.cuid !== action.cuid),
+  }),
+};
+
+// Get all posts
+export const getPosts = state => state.posts.data;
+
+// Get post by cuid
+export const getPost = (state, cuid) => state.posts.data.filter(post => post.cuid === cuid)[0];
+
+// Export Reducer
+// export default (state = initialState, action) => {
+//   const handler = ACTION_HANDLERS;
+//   return reducerHandler(state, handler, action);
+// };
+export default (state = initialState, action) => reducerHandler(state, ACTION_HANDLERS, action);

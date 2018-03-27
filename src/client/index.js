@@ -5,7 +5,7 @@ import { hydrate } from 'react-dom';
 
 import DataLoader from '../common/lib/DataLoader';
 
-import configureStore from '../common/store';
+import configureStore from '../common/redux/store';
 
 // Initialize store
 const store = configureStore(window.__INITIAL_STATE__);
