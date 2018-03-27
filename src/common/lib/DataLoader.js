@@ -5,16 +5,17 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 
 import routes from '../routes';
 
+const flatten = array => [].concat(...array);
+
 export const fetchData = (store, location) => {
   const branch = matchRoutes(routes, location);
-
   const promises = branch.map(({ route, match }) => {
     if (((route || {}).component || {}).need) {
       return route.component.need(store, match);
     }
     return Promise.resolve(null);
   });
-  return Promise.all(promises);
+  return Promise.all(flatten(promises));
 };
 
 

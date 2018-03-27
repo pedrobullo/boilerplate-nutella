@@ -27,7 +27,7 @@ const App = props => (
 );
 
 App.need = () => {
-  console.log('app need #1');
+  console.log('Need from App Test #1');
 };
 
 App.propTypes = {
