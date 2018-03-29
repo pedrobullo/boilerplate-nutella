@@ -72,6 +72,8 @@
     "redux-cookies": "^1.0.1",
     "redux-thunk": "^2.2.0",
     "revalidator": "^0.3.1",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
     "string-mask": "^0.3.0",
     "sweetalert2": "^6.9.1",
     "webpack-isomorphic-tools": "^3.0.5",

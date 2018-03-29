@@ -1,6 +1,7 @@
 import Express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
+import socketIO from 'socket.io';
 
 import * as clientConfig from '../common/config';
 import * as serverConfig from './config';
@@ -46,6 +47,16 @@ const PORT = clientConfig.application.port;
 
 const server = app.listen(PORT, () => {
   console.log(`Running at: ${PORT}. 🤰`); // eslint-disable-line
+});
+
+const socketServer = socketIO();
+socketServer.attach(server);
+socketServer.on('connection', (socket) => {
+  console.log('Socket connection', socket.id);
+  socket.on('action', (action) => {
+    console.log('action', action);
+    socket.emit('action', { type: 'message', data: 'received msg' });
+  });
 });
 
 // exports app and server regularly
