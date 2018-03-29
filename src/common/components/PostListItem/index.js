@@ -9,7 +9,7 @@ function PostListItem(props) {
         {props.post.title}
       </h3>
       <p>{props.post.content}</p>
-      <hr />
+      <hr color="#EEE" />
     </div>
   );
 }

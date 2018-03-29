@@ -6,23 +6,60 @@ import { connect } from 'react-redux';
 import PostList from '../components/PostList';
 
 // Import Actions, Selectors
-import { addPostRequest, fetchPosts, deletePostRequest, getPosts } from '../redux/modules/post';
+import { addPost, fetchPosts, deletePost, getPosts } from '../redux/modules/post';
+
+const styleInput = {
+  width: '100%',
+  padding: '5px 0 5px',
+  lineHeight: '100%',
+  fontSize: '20px',
+};
 
 class PostListPage extends Component {
-  handleDeletePost = (post) => {
-    if (confirm('Do you want to delete this post')) { // eslint-disable-line
-      this.props.dispatch(deletePostRequest(post));
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      title: '',
+    };
+  }
+
+  onChange = event => this.setState({ title: event.target.value });
+
+  onKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+
+      this.props.addPost({
+        name: 'User',
+        title: `New post #${this.props.posts.length + 1}`,
+        content: event.target.value,
+      });
+
+      return this.setState({ title: '' });
     }
+    return true;
   };
 
-  handleAddPost = (name, title, content) => {
-    this.props.dispatch(addPostRequest({ name, title, content }));
+  handleDeletePost = (post) => {
+    if (confirm('Do you want to delete this post')) { // eslint-disable-line
+      this.props.deletePost(post);
+    }
   };
 
   render() {
     return (
       <div className="PostPage">
         <h1>Post List</h1>
+        <label htmlFor="addpost">Add post:
+          <input
+            name="addpost"
+            style={styleInput}
+            onChange={this.onChange}
+            onKeyPress={this.onKeyPress}
+            value={this.state.title} />
+        </label>
         <PostList
           handleDeletePost={this.handleDeletePost}
           posts={this.props.posts} />
@@ -37,11 +74,14 @@ PostListPage.need = ({ dispatch }, { params }) => [
 ];
 
 // Retrieve data from store as props
-function mapStateToProps(state) {
-  return {
-    posts: getPosts(state),
-  };
-}
+const mapStateToProps = state => ({
+  posts: getPosts(state),
+});
+
+const mapDispatchToProps = {
+  addPost,
+  deletePost,
+};
 
 PostListPage.propTypes = {
   posts: PropTypes.arrayOf(
@@ -51,11 +91,12 @@ PostListPage.propTypes = {
       slug: PropTypes.string.isRequired,
       cuid: PropTypes.string.isRequired,
     })).isRequired,
-  dispatch: PropTypes.func.isRequired,
+  addPost: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 PostListPage.contextTypes = {
   router: PropTypes.object,
 };
 
-export default connect(mapStateToProps)(PostListPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PostListPage);

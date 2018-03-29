@@ -6,7 +6,7 @@ import PostListItem from '../PostListItem';
 
 function PostList(props) {
   return (
-    <div>
+    <div style={{ padding: '12px' }}>
       {
         props.posts.map(post => (
           <PostListItem

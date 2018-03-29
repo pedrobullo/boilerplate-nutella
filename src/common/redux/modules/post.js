@@ -13,6 +13,7 @@ export const DELETE_POST = 'DELETE_POST';
 // Export Actions
 export const addPost = post => ({ type: ADD_POST, post });
 export const addPosts = posts => ({ type: ADD_POSTS, posts });
+export const deletePost = id => ({ type: ADD_POSTS, id });
 
 const posts = [
   {
@@ -80,8 +81,4 @@ export const getPosts = state => state.posts.data;
 export const getPost = (state, cuid) => state.posts.data.filter(post => post.cuid === cuid)[0];
 
 // Export Reducer
-// export default (state = initialState, action) => {
-//   const handler = ACTION_HANDLERS;
-//   return reducerHandler(state, handler, action);
-// };
 export default (state = initialState, action) => reducerHandler(state, ACTION_HANDLERS, action);
