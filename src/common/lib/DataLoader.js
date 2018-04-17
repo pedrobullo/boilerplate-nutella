@@ -1,21 +1,26 @@
 import { Component } from 'react';
 import { object } from 'prop-types';
+/* eslint-disable no-await-in-loop, no-unused-expressions, no-plusplus */
 import { withRouter } from 'react-router-dom';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 
 import routes from '../routes';
 
-const flatten = array => [].concat(...array);
-
 export const fetchData = (store, location) => {
   const branch = matchRoutes(routes, location);
-  const promises = branch.map(({ route, match }) => {
-    if (((route || {}).component || {}).need) {
-      return route.component.need(store, match);
+
+  const sequence = async (_branch) => {
+    for (let i = 0; i < _branch.length; i++) {
+      const { route, match } = _branch[i];
+      if (((route || {}).component || {}).need) {
+        route.component.need(store, match).length
+          ? await Promise.all(route.component.need(store, match))
+          : await route.component.need(store, match);
+      }
     }
-    return Promise.resolve(null);
-  });
-  return Promise.all(flatten(promises));
+  };
+
+  return sequence(branch);
 };
 
 
