@@ -70,7 +70,9 @@ class PostListPage extends Component {
 
 // Actions required to provide data for this component to render in sever side.
 PostListPage.need = ({ dispatch }, { params }) => [
-  dispatch(fetchPosts(params)), console.log('Other dispatch #1'), console.log('Another dispatch #2'),
+  dispatch(fetchPosts(params)),
+  console.log('Other PostListPage dispatch'),
+  console.log('Another PostListPage dispatch'),
 ];
 
 // Retrieve data from store as props

@@ -26,9 +26,7 @@ const App = props => (
   </div>
 );
 
-App.need = () => {
-  console.log('Need from App Test #1');
-};
+App.need = ({ dispatch }, { params }) => [console.log('Need from App Test #1 with params:', params)]; // eslint-disable-line
 
 App.propTypes = {
   route: PropTypes.object,

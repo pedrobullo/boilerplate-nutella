@@ -1,4 +1,4 @@
-import App from './components/App/App';
+import App from './containers/App';
 import NotFound from './components/NotFound/NotFound';
 import PostListPage from './containers/PostListPage';
 
