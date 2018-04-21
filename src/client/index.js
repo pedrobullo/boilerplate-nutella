@@ -1,11 +1,11 @@
 import React from 'react';
-import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { hydrate } from 'react-dom';
 
 import DataLoader from '../common/lib/DataLoader';
 
-import configureStore from '../common/store';
+import configureStore from '../common/redux/store';
 
 // Initialize store
 const store = configureStore(window.__INITIAL_STATE__);

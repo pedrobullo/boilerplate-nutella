@@ -1,13 +1,14 @@
-FROM node
+FROM node:9.11-alpine
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# Prepare app directory
+WORKDIR /src
 
-COPY package.json /usr/src/app
+ADD . .
+
 RUN npm install
-COPY . /usr/src/app
 
-ENV NODE_ENV production
+# Expose the app port
+EXPOSE 5000
 
-EXPOSE 8000
-CMD ["npm", "run", "production"]
+# Start the app
+CMD [ "npm", "run", "production" ]

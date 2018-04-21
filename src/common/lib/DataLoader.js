@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax, no-await-in-loop, no-unused-expressions, no-plusplus */
 import { Component } from 'react';
 import { object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -5,16 +6,21 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 
 import routes from '../routes';
 
+// fetchData .need syntax:
+// Component.need = ({ dispatch }, { params }) => [dispatch1(params), dispatch2(params)...]
 export const fetchData = (store, location) => {
   const branch = matchRoutes(routes, location);
 
-  const promises = branch.map(({ route, match }) => {
-    if (((route || {}).component || {}).need) {
-      return route.component.need(store, match);
+  const sequence = async (branches) => {
+    for (const _branch of branches) {
+      const { route, match } = _branch;
+      if (((route || {}).component || {}).need) {
+        await Promise.all(route.component.need(store, match));
+      }
     }
-    return Promise.resolve(null);
-  });
-  return Promise.all(promises);
+  };
+
+  return sequence(branch);
 };
 
 

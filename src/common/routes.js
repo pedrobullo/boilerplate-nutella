@@ -1,7 +1,6 @@
-import App from './modules/App/App';
-import NotFound from './modules/NotFound/NotFound';
-import PostListPage from './modules/Post/pages/PostListPage/PostListPage';
-import PostListIndex from './modules/Post/components/PostListIndex';
+import App from './containers/App';
+import NotFound from './components/NotFound/NotFound';
+import PostListPage from './containers/PostListPage';
 
 export default [
   {
@@ -10,16 +9,6 @@ export default [
       {
         path: '/posts',
         component: PostListPage,
-        routes: [
-          {
-            path: '/posts/list',
-            component: PostListIndex,
-            exact: true,
-          },
-          {
-            component: NotFound,
-          },
-        ],
       },
       {
         component: NotFound,

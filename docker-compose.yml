@@ -1,8 +1,7 @@
-web:
+fontend:
   build: .
   ports:
-   - "80:8000"
-  volumes:
-   - .:/usr/src/app/
+   - "5000:5000"
   environment:
    NODE_ENV: production
+   PORT: 5000

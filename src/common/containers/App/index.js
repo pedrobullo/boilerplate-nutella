@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { renderRoutes as renderSubRoutes } from 'react-router-config';
 
-import './App.scss';
+import styles from './App.scss';
 
 const App = props => (
-  <div className="container">
+  <div className={styles.container}>
     <Helmet
-      title="Service Shop - Test"
-      titleTemplate="%s - Service Shop"
+      title="Boilerplate Nutella - Test"
+      titleTemplate="%s - Boilerplate Nutella"
       meta={[
         { charset: 'utf-8' },
         {
@@ -26,9 +26,9 @@ const App = props => (
   </div>
 );
 
-App.need = () => {
-  console.log('app need #1');
-};
+// Actions required to provide didMount data for this component to render in SSR.
+// Must return array. See more at common/lib/Dataloader.fetchData.
+App.need = ({ dispatch }, { params }) => [console.log('Need from App Test #1 with params:', params)]; // eslint-disable-line
 
 App.propTypes = {
   route: PropTypes.object,

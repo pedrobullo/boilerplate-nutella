@@ -4,7 +4,7 @@
 import { combineReducers } from 'redux';
 
 // Import Reducers
-import posts from './modules/Post/PostReducer';
+import posts from '../redux/modules/post';
 
 // Combine all reducers into one root reducer
 export default combineReducers({ posts });

@@ -6,15 +6,15 @@ import { getCookiesMiddleware } from 'redux-cookies';
 import rootReducer from './reducers';
 
 export default function configureStore(initialState = {}) {
+  const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
   const store = createStore(
     rootReducer,
     initialState,
-    compose(
-      applyMiddleware(thunk),
-      applyMiddleware(getCookiesMiddleware(Cookies)),
-      // for redux devTools chrome extension
-      (typeof window === 'object' && typeof window.devToolsExtension !== 'undefined') ?
-        window.devToolsExtension() : f => f,
+    composeEnhancers(
+      applyMiddleware(
+        thunk,
+        getCookiesMiddleware(Cookies),
+      ),
     ),
   );
 
