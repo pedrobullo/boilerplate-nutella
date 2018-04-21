@@ -23,7 +23,7 @@ open http://localhost:3000
 # Production
 yarn install
 yarn production
-open http://localhost:3000
+open http://localhost:5000
 
 ```
 
