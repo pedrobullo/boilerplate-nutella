@@ -1,6 +1,6 @@
+/* eslint-disable no-restricted-syntax, no-await-in-loop, no-unused-expressions, no-plusplus */
 import { Component } from 'react';
 import { object } from 'prop-types';
-/* eslint-disable no-restricted-syntax, no-await-in-loop, no-unused-expressions, no-plusplus */
 import { withRouter } from 'react-router-dom';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 

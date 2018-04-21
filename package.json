@@ -7,12 +7,8 @@
   "version": "1.0.0",
   "description": "SSR boilerplate with nutella plus Webpack ready.",
   "scripts": {
-    "dev": "concurrently --kill-others \"better-npm-run watch-client\" \"better-npm-run start-dev\"",
-    "production": "cross-env NODE_ENV=production yarn build:client && yarn build:server && better-npm-run start-prod",
-    "build:server": "cross-env NODE_ENV=production webpack -p --config webpack/webpack.config.server.js",
-    "build:client": "cross-env NODE_ENV=production webpack --colors --display-error-details --config webpack/webpack.config.prod.js",
-    "lint": "eslint common server client --ignore-pattern __tests__",
-    "test": "cross-env NODE_ENV=test better-npm-run test"
+    "start": "concurrently --kill-others \"better-npm-run watch-client\" \"better-npm-run start-dev\"",
+    "lint": "eslint common server client --ignore-pattern __tests__"
   },
   "betterScripts": {
     "start-dev": {
@@ -30,20 +26,6 @@
         "NODE_PATH": "./src",
         "PORT": 3000
       }
-    },
-    "start-prod": {
-      "command": "node ./public/dist/server.bundle.js",
-      "env": {
-        "NODE_ENV": "production",
-        "NODE_PATH": "./src",
-        "PORT": 8080
-      }
-    },
-    "test": {
-      "command": "ava --verbose",
-      "env": {
-        "NODE_ENV": "test"
-      }
     }
   },
   "dependencies": {
@@ -57,8 +39,7 @@
     "cookies-js": "^1.2.3",
     "cross-env": "^5.1.3",
     "dotenv": "^4.0.0",
-    "express": "^4.16.2",
-    "moment": "^2.18.1",
+    "express": "^4.16.3",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -121,19 +102,5 @@
     "webpack-dev-middleware": "^1.12.2",
     "webpack-externals-plugin": "^1.0.0",
     "webpack-hot-middleware": "^2.21.0"
-  },
-  "ava": {
-    "files": [
-      "src/**/*.spec.js"
-    ],
-    "source": [
-      "src/**/*.js"
-    ],
-    "failFast": true,
-    "require": [
-      "./src/util/test-server-setup.js",
-      "babel-register"
-    ],
-    "babel": "inherit"
   }
 }

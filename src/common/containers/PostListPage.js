@@ -68,7 +68,8 @@ class PostListPage extends Component {
   }
 }
 
-// Actions required to provide data for this component to render in sever side.
+// Actions required to provide didMount data for this component to render in SSR.
+// Must return array. See more at common/lib/Dataloader.fetchData.
 PostListPage.need = ({ dispatch }, { params }) => [
   dispatch(fetchPosts(params)),
   console.log('Other PostListPage dispatch'),

@@ -26,6 +26,8 @@ const App = props => (
   </div>
 );
 
+// Actions required to provide didMount data for this component to render in SSR.
+// Must return array. See more at common/lib/Dataloader.fetchData.
 App.need = ({ dispatch }, { params }) => [console.log('Need from App Test #1 with params:', params)]; // eslint-disable-line
 
 App.propTypes = {

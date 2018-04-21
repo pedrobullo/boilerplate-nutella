@@ -20,6 +20,9 @@ module.exports = {
     main: [
       path.resolve(srcPath, 'client/index.js'),
     ],
+    server: [
+      path.resolve(srcPath, 'server/index.js'),
+    ],
   },
   output: {
     path: path.resolve(rootPath, 'public/dist'),
@@ -31,16 +34,23 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
+        exclude: [/node_modules/],
         use: [
-          'babel-loader',
+          { loader: 'babel-loader' },
+          { loader: 'eslint-loader' },
         ],
-        exclude: /node_modules/,
+        include: [
+          path.resolve(srcPath, 'common'),
+          path.resolve(srcPath, 'server'),
+          path.resolve(srcPath, 'client'),
+        ],
       },
       {
-        test: /\.(sass|scss|css)$/,
+        test: /\.scss$/,
         use: [
-          'css-loader',
-          'sass-loader',
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'sass-loader' },
         ],
       },
       { test: /\.json$/, loader: 'json-loader' },
@@ -50,6 +60,7 @@ module.exports = {
     modules: [
       path.resolve(rootPath, 'node_modules'),
       path.resolve(rootPath, 'common'),
+      path.resolve(rootPath, 'server'),
     ],
     extensions: ['.js', '.jsx', '.json', '.scss'],
   },
