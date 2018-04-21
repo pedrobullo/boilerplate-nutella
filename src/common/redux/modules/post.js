@@ -13,21 +13,21 @@ export const DELETE_POST = 'DELETE_POST';
 // Export Actions
 export const addPost = post => ({ type: ADD_POST, post });
 export const addPosts = posts => ({ type: ADD_POSTS, posts });
-export const deletePost = id => ({ type: ADD_POSTS, id });
+export const deletePost = slug => ({ type: DELETE_POST, slug });
 
 const posts = [
   {
+    name: 'User',
     title: 'Example Post #1',
     content: 'First post',
     slug: 'first-post',
-    cuid: '1',
     dateAdded: Date.now(),
   },
   {
+    name: 'User',
     title: 'Example Post #2',
     content: 'Second post',
     slug: 'second-post',
-    cuid: '2',
     dateAdded: Date.now(),
   },
 ];
@@ -70,7 +70,7 @@ const ACTION_HANDLERS = {
   }),
 
   [DELETE_POST]: (state, action) => ({
-    data: state.data.filter(post => post.cuid !== action.cuid),
+    data: state.data.filter(post => post.slug !== action.slug),
   }),
 };
 

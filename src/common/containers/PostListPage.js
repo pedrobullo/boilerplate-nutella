@@ -35,6 +35,8 @@ class PostListPage extends Component {
         name: 'User',
         title: `New post #${this.props.posts.length + 1}`,
         content: event.target.value,
+        slug: `post-post-${this.props.posts.length + 1}`,
+        dateAdded: Date.now(),
       });
 
       return this.setState({ title: '' });
@@ -89,10 +91,11 @@ const mapDispatchToProps = {
 PostListPage.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
+      name: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
       slug: PropTypes.string.isRequired,
-      cuid: PropTypes.string.isRequired,
+      dateAdded: PropTypes.number.isRequired,
     })).isRequired,
   addPost: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
