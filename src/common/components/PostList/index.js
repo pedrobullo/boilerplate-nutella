@@ -20,6 +20,7 @@ function PostList(props) {
 }
 
 PostList.propTypes = {
+  handleDeletePost: PropTypes.func,
   posts: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
