@@ -27,7 +27,8 @@ open http://localhost:5000
 
 ```
 
-### Example with Webpack Isomorphic Tools (Responsible to handle client/server exceptions, including assets). You can check at: [Master branch](https://github.com/pedrobj/boilerplate-nutella/tree/razzle)
+### ALTERNATIVE EXAMPLE
+## Isomorphic Tools (Responsible to handle client/server exceptions, including assets). You can check at: [isomorphic-tools branch](https://github.com/pedrobj/boilerplate-nutella/tree/isomorphic-tools)
 
 # Dependencies
 * Webpack
