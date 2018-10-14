@@ -14,8 +14,7 @@ module.exports = {
         minimize: !dev,
         sourceMap: dev,
         importLoaders: 1,
-        sourceMap: true,
-        modules: false, // TODO: Css Modules :(
+        modules: true, // TODO: Css Modules :(
       },
     };
 
@@ -63,12 +62,12 @@ module.exports = {
       appConfig.plugins.push(
         new ExtractCssChunks({
           allChunks: true,
-          filename: '[name]-[contenthash].css',
+          filename: '[name]-[contenthash].module.css',
           chunkFilename: '[id].css',
-          hot: true, // if you want HMR - we try to automatically inject hot reload
+          hot: dev, // if you want HMR - we try to automatically inject hot reload
           orderWarning: true, // Disable to remove warnings about conflicting order between imports
           reloadAll: true, // when desperation kicks in - this is a brute force HMR flag
-          cssModules: false, // if you use cssModules, this can help.
+          cssModules: true, // if you use cssModules, this can help.
         }),
       );
     }

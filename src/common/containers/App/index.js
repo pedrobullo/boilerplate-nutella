@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { renderRoutes as renderSubRoutes } from 'react-router-config';
 
-import './App.scss';
+import styles from './App.scss';
 
 const App = props => (
-  <div className="container">
+  <div className={styles.container}>
     <Helmet
       title="Boilerplate Nutella - Test"
       titleTemplate="%s - Boilerplate Nutella"

@@ -1,9 +1,13 @@
 body {
   margin: 0;
   color: #F1F1F1;
+  background-color: #212121;
 }
 
 .container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
   padding: 20px;
   border: solid 1px #212121;
   background-color: #222;
