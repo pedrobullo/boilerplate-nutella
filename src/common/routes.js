@@ -7,7 +7,7 @@ export default [
     component: App,
     routes: [
       {
-        path: '/posts',
+        path: '/',
         component: PostListPage,
       },
       {

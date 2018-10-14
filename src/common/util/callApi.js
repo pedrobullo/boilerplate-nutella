@@ -1,10 +1,8 @@
 import axios from 'axios';
-import { application, api } from '../config';
+import { api } from '../config';
 
-export default function callApi(url, method, getParams = {}, postData = {}, token = '') {
+export default function callApi(url, method, params = {}, body = {}) {
   const isServer = (typeof window === 'undefined' || process.env.NODE_ENV === 'test');
-  const baseURL = isServer ? `http://localhost:${application.port}/api` : '/api';
-  const rooturl = isServer ? global.__CLIENT_URL__ : window.location.pathname;
   const parseJson = (json) => {
     try {
       return JSON.parse(json);
@@ -13,16 +11,24 @@ export default function callApi(url, method, getParams = {}, postData = {}, toke
     }
   };
 
+  // FIXME: Add your server to server / client to server in configuration
+  const baseURL = `http://${api.host}:${api.port}/api`;
+
+  if (isServer) {
+    console.log('callApi:', { baseURL, url, params })
+  }
+
   return axios({
     baseURL,
     url: (url || ''),
     method: (method || 'get'),
     headers: {
-      Authorization: token,
-      rooturl,
+      'Access-Control-Allow-Origin': '*'
+      // Authorization: token,
     },
-    params: getParams,
-    data: postData,
+    crossDomain: true,
+    params,
+    data: body,
     timeout: api.timeout || 1000,
     transformResponse: [
       (response) => {
@@ -32,16 +38,11 @@ export default function callApi(url, method, getParams = {}, postData = {}, toke
         return response;
       },
       (response) => {
-        if (response.data) {
-          return {
-            ...response,
-            data: {
-              requestedOrigin: isServer ? ['server'] : ['server', 'client'],
-            },
-          };
-        }
-        return response;
-      },
+        return {
+          response,
+          requestedOrigin: isServer ? ['server'] : ['server', 'client'],
+        };
+      }
     ],
   });
 }

@@ -8,10 +8,12 @@ Boilerplate Nutella
 <center>Cheio de modinha e açucar</center>
 
 # Goal
-Clean environment, Isomorphic (Universal) architecture
+Clean environment, Isomorphic (Universal) architecture ~~with lot sugar~~
 
 # Razzle
-Razzle: lib with ready-to-go (DEV/PROD) universal webpack setup. Pretty customizable (babelrc, lint, webpack.config). [Razzle Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle)
+Razzle is a tool that abstracts all complex configuration needed for SSR into a single dependency--giving you the awesome developer experience of create-react-app, but then leaving the rest of your app's architectural decisions about frameworks, routing, and data fetching up to you. 
+Pretty customizable (babelrc, lint, webpack.config).
+Repo: [Razzle Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle)
 
 # Usage
 ```
@@ -32,8 +34,7 @@ open http://localhost:5000
 
 # Dependencies
 * Webpack
-* React
-* Redux
+* React + Redux
 * [Razzle Universal Webpack Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle)
 * [react-router](https://github.com/ReactTraining/react-router) - Declarative routing for React v4 :(. (TODO: Remove)
 * [classnames](https://github.com/JedWatson/classnames) - A simple JavaScript utility for conditionally joining classNames together. 
@@ -41,6 +42,9 @@ open http://localhost:5000
 * [moment](https://github.com/moment/moment) - A lightweight JavaScript date library for parsing, validating, manipulating, and formatting dates.
 * [sweetalert2](https://github.com/limonte/sweetalert2) - Replacement for JavaScript's popup boxes.
 * [react-helmet](https://github.com/nfl/react-helmet) - A document head manager for React
+
+# Plus
+* Winston + exception logger
 
 # Resources
 * [react-router v4 stuff](https://reacttraining.com/react-router)
@@ -51,10 +55,9 @@ open http://localhost:5000
 * [react-router guide](https://reacttraining.com/react-router/web/example/route-config)
 
 # Patterns / LINT
-* [AirBnB - React](https://github.com/airbnb/javascript/blob/master/react/README.md)
 * [ESLINT](https://github.com/eslint/eslint)
 
 # TODOS:
 * Styled component
 * Better routing solution
-* Tests
+* Code Splitting + Lazy Loading
