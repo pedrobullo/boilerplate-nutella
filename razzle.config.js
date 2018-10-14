@@ -2,12 +2,31 @@
 
 const autoprefixer = require('autoprefixer')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 
 module.exports = {
   modify: (baseConfig, { target, dev }, webpack) => {
+    const appConfig = Object.assign({}, baseConfig);
+    const isServer = target !== 'web';
 
-    const appConfig = Object.assign({}, baseConfig)
-    const isServer = target !== 'web'
+    const cssLoader = {
+      loader: 'css-loader',
+      options: {
+        minimize: !dev,
+        sourceMap: dev,
+        importLoaders: 1,
+        sourceMap: true,
+        modules: true,
+        localIdentName: '[name]__[local]___[hash:base64:5]'
+      },
+    };
+
+    const sassLoader = {
+      loader: 'sass-loader',
+      options: {
+        sourceMap: dev,
+      },
+    };
 
     const postCssLoader = {
       loader: 'postcss-loader',
@@ -25,51 +44,45 @@ module.exports = {
           })
         ]
       }
-    }
+    };
 
+    console.log(appConfig.module.rules)
     appConfig.module.rules.push({
-      test: /.scss$/,
+      test: /\.(sa|sc)ss$/,
       use:
-      // Handle scss imports on the server
-      isServer ? ['css-loader', 'sass-loader'] :
-      // For development, include source map
-      dev
-      ? [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            sourceMap: true,
-          },
-        },
-        postCssLoader,
-        {
-          loader: 'sass-loader',
-          options: {
-            sourceMap: true
-          }
-        },
-      ]
-      // For production, extract CSS
-      : ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-            },
-          },
+        // Handle scss imports on the server
+        isServer ? [cssLoader, postCssLoader, sassLoader] :
+        // For development, include source map
+        dev ? [
+          'style-loader',
+          cssLoader,
           postCssLoader,
-          'sass-loader',
-        ],
-      })
-    })
+          sassLoader
+        ]
+        // For production, extract CSS
+        : ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            cssLoader,
+            postCssLoader,
+            sassLoader
+          ],
+        })
+    });
 
     if (!isServer && !dev) {
       appConfig.plugins.push(
         new ExtractTextPlugin('static/css/[name].[contenthash:8].css')
       )
+    }
+
+    if (isServer) {
+      appConfig.plugins = [
+        ...appConfig.plugins,
+        new webpack.optimize.LimitChunkCountPlugin({
+          maxChunks: 1,
+        })
+      ];
     }
 
     return appConfig
