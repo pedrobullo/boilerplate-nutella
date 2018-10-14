@@ -1,7 +1,6 @@
 // Based on: https://gist.github.com/jaredpalmer/0a91a7bd354b875b913c74f4b16125f7
 
 const autoprefixer = require('autoprefixer')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 
 module.exports = {
@@ -16,8 +15,7 @@ module.exports = {
         sourceMap: dev,
         importLoaders: 1,
         sourceMap: true,
-        modules: true,
-        localIdentName: '[name]__[local]___[hash:base64:5]'
+        modules: false, // TODO: Css Modules :(
       },
     };
 
@@ -28,7 +26,7 @@ module.exports = {
       },
     };
 
-    const postCssLoader = {
+    const postCSSLoader = {
       loader: 'postcss-loader',
       options: {
         ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
@@ -46,34 +44,33 @@ module.exports = {
       }
     };
 
-    console.log(appConfig.module.rules)
     appConfig.module.rules.push({
       test: /\.(sa|sc)ss$/,
       use:
-        // Handle scss imports on the server
-        isServer ? [cssLoader, postCssLoader, sassLoader] :
-        // For development, include source map
-        dev ? [
-          'style-loader',
+        isServer ? [
           cssLoader,
-          postCssLoader,
-          sassLoader
-        ]
-        // For production, extract CSS
-        : ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            cssLoader,
-            postCssLoader,
-            sassLoader
-          ],
-        })
+          postCSSLoader,
+          sassLoader,
+        ] : [
+          dev ? 'style-loader' : ExtractCssChunks.loader,
+          cssLoader,
+          postCSSLoader,
+          sassLoader,
+        ],
     });
 
     if (!isServer && !dev) {
       appConfig.plugins.push(
-        new ExtractTextPlugin('static/css/[name].[contenthash:8].css')
-      )
+        new ExtractCssChunks({
+          allChunks: true,
+          filename: '[name]-[contenthash].css',
+          chunkFilename: '[id].css',
+          hot: true, // if you want HMR - we try to automatically inject hot reload
+          orderWarning: true, // Disable to remove warnings about conflicting order between imports
+          reloadAll: true, // when desperation kicks in - this is a brute force HMR flag
+          cssModules: false, // if you use cssModules, this can help.
+        }),
+      );
     }
 
     if (isServer) {

@@ -23,7 +23,6 @@ export default function appRouting(req, res) {
   );
 
   const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
-  console.log('assets', assets)
 
   return fetchData(store, req.url)
     .then(() => {

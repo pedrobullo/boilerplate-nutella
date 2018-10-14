@@ -1,5 +1,19 @@
+body {
+  margin: 0;
+  color: #F1F1F1;
+}
+
 .container {
   padding: 20px;
   border: solid 1px #212121;
   background-color: #222;
+}
+
+hr {
+  border-color: #999;
+}
+
+input {
+  background-color: #3f3c3c;
+  border: solid 1px #999;
 }
