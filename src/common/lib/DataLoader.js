@@ -26,7 +26,6 @@ export const fetchData = (store, location) => {
 
 /*
 DataLoader: https://www.npmjs.com/package/react-router-config
-TODO: Migrate to routes.js
 */
 class DataLoader extends Component {
   static displayName = 'DataLoader';
@@ -39,14 +38,20 @@ class DataLoader extends Component {
     location: object.isRequired,
   };
 
-  componentWillReceiveProps(nextProps) {
-    const navigated = nextProps.location !== this.props.location;
+  static getDerivedStateFromProps(nextProps, state) {
+    const navigated = nextProps.location !== state.lastLocation;
 
     if (navigated) {
       const { store } = this.context;
       fetchData(store, nextProps.location.pathname);
+      return { lastLocation: location};
     }
+    return null;
   }
+
+  state = {
+    lastLocation: this.props.location
+  };
 
   render() {
     return renderRoutes(routes);
