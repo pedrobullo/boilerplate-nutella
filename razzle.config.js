@@ -1,15 +1,32 @@
 // Based on: https://gist.github.com/jaredpalmer/0a91a7bd354b875b913c74f4b16125f7
 
-const autoprefixer = require('autoprefixer')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const autoprefixer = require('autoprefixer');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
   modify: (baseConfig, { target, dev }, webpack) => {
+    const appConfig = Object.assign({}, baseConfig);
+    const isServer = target !== 'web';
 
-    const appConfig = Object.assign({}, baseConfig)
-    const isServer = target !== 'web'
+    const cssLoader = {
+      loader: isServer ? require.resolve('css-loader/locals') : 'css-loader',
+      options: {
+        minimize: !dev,
+        sourceMap: dev,
+        importLoaders: 2, // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loade
+        localIdentName: '[name]-[local]-[hash:base64:5]',
+        modules: true,
+      },
+    };
 
-    const postCssLoader = {
+    const sassLoader = {
+      loader: 'sass-loader',
+      options: {
+        sourceMap: dev,
+      },
+    };
+
+    const postCSSLoader = {
       loader: 'postcss-loader',
       options: {
         ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
@@ -25,51 +42,44 @@ module.exports = {
           })
         ]
       }
-    }
+    };
 
     appConfig.module.rules.push({
-      test: /.scss$/,
+      test: /\.(sa|sc)ss$/,
       use:
-      // Handle scss imports on the server
-      isServer ? ['css-loader', 'sass-loader'] :
-      // For development, include source map
-      dev
-      ? [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            sourceMap: true,
-          },
-        },
-        postCssLoader,
-        {
-          loader: 'sass-loader',
-          options: {
-            sourceMap: true
-          }
-        },
-      ]
-      // For production, extract CSS
-      : ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-            },
-          },
-          postCssLoader,
-          'sass-loader',
+        isServer ? [
+          cssLoader,
+          postCSSLoader,
+          sassLoader,
+        ] : [
+          dev ? 'style-loader' : ExtractCssChunks.loader,
+          cssLoader,
+          postCSSLoader,
+          sassLoader,
         ],
-      })
-    })
+    });
 
     if (!isServer && !dev) {
       appConfig.plugins.push(
-        new ExtractTextPlugin('static/css/[name].[contenthash:8].css')
-      )
+        new ExtractCssChunks({
+          allChunks: true,
+          filename: dev ? '[name].module.css' : '[name]-[hash].module.css',
+          chunkFilename: dev ? '[id].css' : '[id]-[hash].css',
+          hot: dev, // if you want HMR - we try to automatically inject hot reload
+          orderWarning: true, // Disable to remove warnings about conflicting order between imports
+          reloadAll: true, // when desperation kicks in - this is a brute force HMR flag
+          cssModules: true, // if you use cssModules, this can help.
+        }),
+      );
+    }
+
+    if (isServer) {
+      appConfig.plugins = [
+        ...appConfig.plugins,
+        new webpack.optimize.LimitChunkCountPlugin({
+          maxChunks: 1,
+        })
+      ];
     }
 
     return appConfig
