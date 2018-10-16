@@ -2,7 +2,7 @@ Boilerplate Nutella
 =====================
 
 <p align="center">
-  <img width="150" height="100" src="https://i.pinimg.com/originals/94/a5/b3/94a5b3383b4fcc04a4c36d0c5a04ab24.png">
+  <img width="150" height="100" src="https://github.com/pedrobullo/boilerplate-nutella/blob/master/public/nutella.png">
 </p>
 
 <center>Cheio de modinha e açucar</center>
