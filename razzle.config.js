@@ -1,7 +1,7 @@
 // Based on: https://gist.github.com/jaredpalmer/0a91a7bd354b875b913c74f4b16125f7
 
-const autoprefixer = require('autoprefixer')
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
+const autoprefixer = require('autoprefixer');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
   modify: (baseConfig, { target, dev }, webpack) => {
@@ -9,13 +9,13 @@ module.exports = {
     const isServer = target !== 'web';
 
     const cssLoader = {
-      loader: 'css-loader',
+      loader: isServer ? require.resolve('css-loader/locals') : 'css-loader',
       options: {
         minimize: !dev,
         sourceMap: dev,
         importLoaders: 2, // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loade
-        localIdentName: '[name]__[local]--[hash:base64:5]',
-        modules: false, // TODO: Css Modules :(
+        localIdentName: '[name]-[local]-[hash:base64:5]',
+        modules: true,
       },
     };
 

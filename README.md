@@ -11,9 +11,18 @@ Boilerplate Nutella
 Clean environment, Isomorphic (Universal) architecture ~~with lot sugar~~
 
 # Razzle
-Razzle is a tool that abstracts all complex configuration needed for SSR into a single dependency--giving you the awesome developer experience of create-react-app, but then leaving the rest of your app's architectural decisions about frameworks, routing, and data fetching up to you. 
+Razzle is a tool that abstracts all complex configuration needed for SSR into a single dependency--giving you the awesome developer experience of create-react-app, but then leaving the rest of your app's architectural decisions about frameworks, routing, and data fetching up to you.
 Pretty customizable (babelrc, lint, webpack.config).
 Repo: [Razzle Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle)
+
+# Sass and CSS Modules
+```js
+import style from 'my.scss'
+
+<div className={style.mycontainer} />
+```
+TODO: Assets Critical path
+
 
 # Usage
 ```
@@ -37,7 +46,7 @@ open http://localhost:5000
 * React + Redux
 * [Razzle Universal Webpack Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle)
 * [react-router](https://github.com/ReactTraining/react-router) - Declarative routing for React v4 :(. (TODO: Remove)
-* [classnames](https://github.com/JedWatson/classnames) - A simple JavaScript utility for conditionally joining classNames together. 
+* [classnames](https://github.com/JedWatson/classnames) - A simple JavaScript utility for conditionally joining classNames together.
 * [revalidator](https://github.com/flatiron/revalidator) - JSON schema validator
 * [moment](https://github.com/moment/moment) - A lightweight JavaScript date library for parsing, validating, manipulating, and formatting dates.
 * [sweetalert2](https://github.com/limonte/sweetalert2) - Replacement for JavaScript's popup boxes.
@@ -61,3 +70,4 @@ open http://localhost:5000
 * Styled component
 * Better routing solution
 * Code Splitting + Lazy Loading
+* Assets critical path
