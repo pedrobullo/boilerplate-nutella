@@ -1,4 +1,5 @@
 // Based on: https://gist.github.com/jaredpalmer/0a91a7bd354b875b913c74f4b16125f7
+const ReactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
 
 const autoprefixer = require('autoprefixer');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
@@ -73,14 +74,32 @@ module.exports = {
       );
     }
 
-    if (isServer) {
+    if (target === 'web') {
       appConfig.plugins = [
         ...appConfig.plugins,
         new webpack.optimize.LimitChunkCountPlugin({
-          maxChunks: 1,
-        })
+          maxChunks: Infinity,
+        }),
+        new ReactLoadablePlugin({
+          filename: './build/react-loadable.json',
+        }),
       ];
     }
+
+    // appConfig.optimization = {
+    //   // runtimeChunk: {
+    //   //   name: 'bootstrap'
+    //   // },
+    //   splitChunks: {
+    //       chunks: 'initial',
+    //       cacheGroups: {
+    //           vendors: {
+    //               test: /[\\/]node_modules[\\/]/,
+    //               name: 'vendor'
+    //           }
+    //       }
+    //   }
+    // }
 
     return appConfig
   }

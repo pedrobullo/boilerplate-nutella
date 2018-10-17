@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop, no-unused-expressions, no-plusplus */
-import { Component } from 'react';
-import { object } from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 
@@ -14,12 +14,19 @@ export const fetchData = (store, location) => {
   const sequence = async (branches) => {
     for (const _branch of branches) {
       const { route, match } = _branch;
+
       if (((route || {}).component || {}).need) {
         await Promise.all(route.component.need(store, match));
+      } else if (route.component.preload) {
+        await route.component.preload() // Lazy preload (react-loadable)
+          .then(component => {
+            if (component.default.need) {
+              return Promise.all(component.default.need(store, match));
+            }
+          })
       }
     }
   };
-
   return sequence(branch);
 };
 
@@ -27,31 +34,25 @@ export const fetchData = (store, location) => {
 /*
 DataLoader: https://www.npmjs.com/package/react-router-config
 */
-class DataLoader extends Component {
+class DataLoader extends React.Component {
   static displayName = 'DataLoader';
 
   static contextTypes = {
-    store: object,
-  };
+    store: PropTypes.object
+  }
 
   static propTypes = {
-    location: object.isRequired,
+    location: PropTypes.object.isRequired,
   };
 
-  static getDerivedStateFromProps(nextProps, state) {
-    const navigated = nextProps.location !== state.lastLocation;
+  componentDidUpdate(prevProps) {
+    const navigated = this.props.location !== prevProps.location;
 
     if (navigated) {
       const { store } = this.context;
-      fetchData(store, nextProps.location.pathname);
-      return { lastLocation: location};
+      fetchData(store, this.props.location.pathname);
     }
-    return null;
   }
-
-  state = {
-    lastLocation: this.props.location
-  };
 
   render() {
     return renderRoutes(routes);

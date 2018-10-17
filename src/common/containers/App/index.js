@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { renderRoutes as renderSubRoutes } from 'react-router-config';
+import { Link } from 'react-router-dom';
 
 import styles from './App.scss';
 
@@ -22,13 +23,23 @@ const App = props => (
         },
       ]} />
     <h1>APP</h1>
-    { renderSubRoutes(props.route.routes) }
+    <div className={styles.navbar}>
+      <Link className={styles.link} to="/">Home</Link>
+      <Link className={styles.link} to="/posts">Post list</Link>
+    </div>
+    <div className={styles.content}>
+      { renderSubRoutes(props.route.routes) }
+    </div>
   </div>
 );
 
-// Actions required to provide didMount data for this component to render in SSR.
+// SSR
+// Actions required for Client/Server to provide didMount data to this component.
 // Must return array. See more at common/lib/Dataloader.fetchData.
-App.need = ({ dispatch }, { params }) => [console.log('Need from App Test #1 with params:', params)]; // eslint-disable-line
+App.need = ({ dispatch }, { params }) => [ // eslint-disable-line
+  console.log('need: First dispatch from App with params:', params),
+  console.log('need: Another dispatch from App with params:', params),
+];
 
 App.propTypes = {
   route: PropTypes.object,

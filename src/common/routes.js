@@ -1,18 +1,21 @@
-import App from './containers/App';
-import NotFound from './components/NotFound/NotFound';
-import PostListPage from './containers/PostListPage';
+import Loadable from 'react-loadable';
+
+const loadComponent = (path) => Loadable({
+  loader: () => import(`${path}`),
+  loading: () => null,
+});
 
 export default [
   {
-    component: App,
+    path: '/',
+    component: loadComponent('./containers/App'),
     routes: [
       {
-        path: '/',
-        component: PostListPage,
+        path: '/posts',
+        component: loadComponent('./containers/PostListPage'),
       },
-      {
-        component: NotFound,
-      },
+      { component: loadComponent('./components/NotFound') },
     ],
   },
+  { component: loadComponent('./components/NotFound') },
 ];
