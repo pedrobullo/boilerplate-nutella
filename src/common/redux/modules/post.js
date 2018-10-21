@@ -32,11 +32,13 @@ const posts = [
   },
 ];
 
-export const callApiTest = x => new Promise(resolve => setTimeout(() => resolve(x), 2000));
+export const callApiTest = x => new Promise(resolve => setTimeout(() => resolve(x), 200));
 
-export const fetchPosts = () => dispatch =>
-  callApiTest(posts, '/api/posts', 'get')
+export const fetchPosts = (params) => dispatch => {
+  console.log('Fetching Posts', params);
+  return callApiTest(posts, '/api/posts', 'get')
     .then(res => dispatch(addPosts(res)));
+}
 
 export const savePost = (post) => {
   // Validate - JSON Schema

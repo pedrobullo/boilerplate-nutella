@@ -74,8 +74,7 @@ class PostListPage extends Component {
 // Must return array. See more at common/lib/Dataloader.fetchData.
 PostListPage.need = ({ dispatch }, { params }) => [
   dispatch(fetchPosts(params)),
-  console.log('Other PostListPage dispatch'),
-  console.log('Another PostListPage dispatch'),
+  console.log('need: Random dispatch from PostListPage'),
 ];
 
 // Retrieve data from store as props

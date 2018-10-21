@@ -14,7 +14,7 @@ function getAssets(assets = {}) {
   return {};
 }
 
-function renderHTML(html, initialState = {}, assets = {}) {
+function renderHTML(html, initialState = {}, assets = {}, modules = '') {
   const head = Helmet.renderStatic();
   const _assets = getAssets(assets);
   return `
@@ -37,6 +37,7 @@ function renderHTML(html, initialState = {}, assets = {}) {
     <script>
       window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
     </script>
+    ${modules}
     ${_assets.javascript}
   </body>
 </html>
