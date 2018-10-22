@@ -43,13 +43,14 @@ export default function appRouting(req, res) {
 
       const bundles = getBundles(stats, modules);
       const chunks = bundles.filter(bundle => typeof bundle === 'object' && bundle.file.endsWith('.js'));
-      const jsModules = chunks.map(chunk => `<script src="/${chunk.file}"></script>`).join('\n');
+      const styles = bundles.filter(bundle => typeof bundle === 'object' && bundle.file.endsWith('.css'));
 
       const html = renderHTML(
         componentHTML,
         store.getState(),
         assets,
-        jsModules
+        chunks,
+        styles
       );
       return { html };
     })

@@ -77,29 +77,14 @@ module.exports = {
     if (target === 'web') {
       appConfig.plugins = [
         ...appConfig.plugins,
-        new webpack.optimize.LimitChunkCountPlugin({
-          maxChunks: Infinity,
-        }),
         new ReactLoadablePlugin({
           filename: './build/react-loadable.json',
         }),
+        new webpack.optimize.LimitChunkCountPlugin({
+          maxChunks: Infinity,
+        })
       ];
     }
-
-    // appConfig.optimization = {
-    //   // runtimeChunk: {
-    //   //   name: 'bootstrap'
-    //   // },
-    //   splitChunks: {
-    //       chunks: 'initial',
-    //       cacheGroups: {
-    //           vendors: {
-    //               test: /[\\/]node_modules[\\/]/,
-    //               name: 'vendor'
-    //           }
-    //       }
-    //   }
-    // }
 
     return appConfig
   }

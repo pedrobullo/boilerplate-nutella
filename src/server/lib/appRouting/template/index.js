@@ -14,7 +14,13 @@ function getAssets(assets = {}) {
   return {};
 }
 
-function renderHTML(html, initialState = {}, assets = {}, modules = '') {
+function renderHTML(
+  html,
+  initialState = {},
+  assets = {},
+  chunks = [],
+  styles = [],
+) {
   const head = Helmet.renderStatic();
   const _assets = getAssets(assets);
   return `
@@ -31,13 +37,28 @@ function renderHTML(html, initialState = {}, assets = {}, modules = '') {
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
     ${_assets.style}
+    ${styles
+      .map(style => {
+        return `<link href="${style.file}" rel="stylesheet"/>`;
+      })
+      .join('\n')}
   </head>
   <body>
     <div id="app">${html}</div>
     <script>
       window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
     </script>
-    ${modules}
+    ${chunks
+      .map(
+        chunk =>
+          process.env.NODE_ENV === 'production'
+            ? `<script src="/${chunk.file}"></script>`
+            : `<script src="http://${process.env.HOST}:${parseInt(
+                process.env.PORT,
+                10
+              ) + 1}/${chunk.file}"></script>`
+      )
+      .join('\n')}
     ${_assets.javascript}
   </body>
 </html>
