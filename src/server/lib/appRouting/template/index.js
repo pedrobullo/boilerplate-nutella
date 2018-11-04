@@ -19,7 +19,7 @@ function renderHTML(
   initialState = {},
   assets = {},
   chunks = [],
-  styles = [],
+  styleTags = [],
 ) {
   const head = Helmet.renderStatic();
   const _assets = getAssets(assets);
@@ -37,11 +37,7 @@ function renderHTML(
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
     ${_assets.style}
-    ${styles
-      .map(style => {
-        return `<link href="${style.file}" rel="stylesheet"/>`;
-      })
-      .join('\n')}
+    ${styleTags}
   </head>
   <body>
     <div id="app">${html}</div>
