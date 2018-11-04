@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 // Import Components
 import PostList from '../components/PostList';
@@ -8,12 +9,15 @@ import PostList from '../components/PostList';
 // Import Actions, Selectors
 import { addPost, fetchPosts, deletePost, getPosts } from '../redux/modules/post';
 
-const styleInput = {
-  width: '100%',
-  padding: '5px 0 5px',
-  lineHeight: '100%',
-  fontSize: '20px',
-};
+const Input = styled.input`
+  width: 100%;
+  padding: 5px 0 5px;
+  border: solid 1px #999;
+  background-color: #3f3c3c;
+  line-height: 100%;
+  font-size: 20px;
+  color: lightgray;
+`;
 
 class PostListPage extends Component {
   constructor(props) {
@@ -55,9 +59,8 @@ class PostListPage extends Component {
       <div className="PostPage">
         <h1>Post List</h1>
         <label htmlFor="addpost">Add post:
-          <input
+          <Input
             name="addpost"
-            style={styleInput}
             onChange={this.onChange}
             onKeyPress={this.onKeyPress}
             value={this.state.title} />
