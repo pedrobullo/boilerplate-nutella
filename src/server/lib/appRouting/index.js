@@ -16,6 +16,8 @@ import rootReducer from '../../../common/redux/reducers';
 
 import stats from '../../../../build/react-loadable.json';
 
+import { ServerStyleSheet } from 'styled-components';
+
 export default function appRouting(req, res) {
   const context = {};
   const cookies = new Cookies(req, res);
@@ -30,27 +32,30 @@ export default function appRouting(req, res) {
 
   return fetchData(store, req.url)
     .then(() => {
+      const sheet = new ServerStyleSheet();
       const modules = [];
       const componentHTML = renderToString(
-        <Provider store={store}>
-          <Capture report={moduleName => modules.push(moduleName)}>
-            <StaticRouter location={req.url} context={context}>
-              <DataLoader />
-            </StaticRouter>
-          </Capture>
-        </Provider>,
+        sheet.collectStyles(
+          <Provider store={store}>
+            <Capture report={moduleName => modules.push(moduleName)}>
+              <StaticRouter location={req.url} context={context}>
+                <DataLoader />
+              </StaticRouter>
+            </Capture>
+          </Provider>
+        )
       );
+      const styleTags = sheet.getStyleTags();
 
       const bundles = getBundles(stats, modules);
       const chunks = bundles.filter(bundle => typeof bundle === 'object' && bundle.file.endsWith('.js'));
-      const styles = bundles.filter(bundle => typeof bundle === 'object' && bundle.file.endsWith('.css'));
 
       const html = renderHTML(
         componentHTML,
         store.getState(),
         assets,
         chunks,
-        styles
+        styleTags
       );
       return { html };
     })

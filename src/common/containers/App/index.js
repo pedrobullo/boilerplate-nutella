@@ -3,11 +3,36 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { renderRoutes as renderSubRoutes } from 'react-router-config';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import GlobalStyles from './GlobalStyles';
 
-import styles from './App.scss';
+const Container = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  border: solid 1px #212121;
+  background-color: #222;
+`;
+
+const Navbar = styled.div`
+  background-color: #212121;
+  padding: 0px 10px 10px 0px;
+  margin-bottom: 20px;
+  > a {
+    padding: 10px;
+    border-right: solid 1px #555;
+  }
+`;
+
+const Content = styled.div`
+  background-color: #3f3c3c;
+  padding: 10px;
+`;
 
 const App = props => (
-  <div className={styles.container}>
+  <React.Fragment>
     <Helmet
       title="Boilerplate Nutella - Test"
       titleTemplate="%s - Boilerplate Nutella"
@@ -22,15 +47,18 @@ const App = props => (
           content: 'width=device-width, initial-scale=1',
         },
       ]} />
-    <h1>APP</h1>
-    <div className={styles.navbar}>
-      <Link className={styles.link} to="/">Home</Link>
-      <Link className={styles.link} to="/posts">Post list</Link>
-    </div>
-    <div className={styles.content}>
-      { renderSubRoutes(props.route.routes) }
-    </div>
-  </div>
+    <GlobalStyles />
+    <Container>
+      <h1>APP</h1>
+      <Navbar>
+        <Link style={{ color: '#EEE' }} to="/">Home</Link>
+        <Link style={{ color: '#EEE' }} to="/posts">Post list</Link>
+      </Navbar>
+      <Content>
+        { renderSubRoutes(props.route.routes) }
+      </Content>
+    </Container>
+  </React.Fragment>
 );
 
 // SSR

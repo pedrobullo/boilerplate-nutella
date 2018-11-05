@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Hr = styled.hr`
+  border-color: #999;
+`;
 
 function PostListItem(props) {
   return (
@@ -9,7 +14,7 @@ function PostListItem(props) {
         {props.post.title}
       </h3>
       <p>{props.post.content}</p>
-      <hr color="#EEE" />
+      <Hr color="#EEE" />
     </div>
   );
 }
