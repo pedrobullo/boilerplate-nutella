@@ -8,23 +8,9 @@ Boilerplate Nutella
 <center>Cheio de modinha e açucar</center>
 
 # Goal
-Clean environment, Isomorphic (Universal) architecture ~~with lot sugar~~
+Clean environment, Code Splitting and Server-Side Rendering (Isomorphic/Universal) architecture ~~with lot sugar~~
 
-# Razzle
-Razzle is a tool that abstracts all complex configuration needed for SSR into a single dependency--giving you the awesome developer experience of create-react-app, but then leaving the rest of your app's architectural decisions about frameworks, routing, and data fetching up to you.
-Pretty customizable (babelrc, lint, webpack.config).
-Repo: [Razzle Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle)
-
-# Sass and CSS Modules
-```js
-import style from 'my.scss'
-
-<div className={style.mycontainer} />
-```
-TODO: Assets Critical path
-
-
-# Usage
+# Installation
 ```
 # Development
 yarn install
@@ -38,14 +24,81 @@ open http://localhost:5000
 
 ```
 
-### ALTERNATIVE EXAMPLE
-## Isomorphic Tools (Responsible to handle client/server exceptions, including assets). You can check at: [isomorphic-tools branch](https://github.com/pedrobj/boilerplate-nutella/tree/isomorphic-tools)
+# Code Splitting
+
+This feature allows you to split your code into various bundles which can then be loaded on demand or in parallel. - Webpack
+Why? Code-splitting forces you to think modular-first, your first-render bundle size surely will get a huge drop.
+
+The magic: [Loadable Component](https://www.smooth-code.com/open-source/loadable-components/)
+
+# Razzle
+Razzle is a tool that abstracts all complex configuration needed for SSR into a single dependency--giving you the awesome developer experience of create-react-app, but then leaving the rest of your app's architectural decisions about frameworks, routing, and data fetching up to you.
+Pretty customizable (babelrc, lint, webpack.config).
+Why? Razzle bases on CRA webpack with SSR feature and you are able to keep your own desired architecture, pretty maintenable and take off huge of your webpack dirty job.
+
+Repo: [Razzle Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle)
+
+# Sass with CSS Modules (Optional)
+
+```js
+import style from 'my.scss'
+
+<div className={style.mycontainer} />
+```
+TODO: Style critical path in Developtment - (Pretty acceptable right now, in production this is already working because extracted css).
+
+# Isomorphic fetching - Data Loader
+Once you dont have componentDidMount in server-side we need somehow abstract it.
+How? Flagging which dispatches we need to load before rendering our HOC (High-order-component).
+
+## fetchData() looks for RouteComponent.need (nested) additionally route/query params are accessible in .need.
+
+```
+- RouteComponent
+  - .need()
+  - SubRouteComponent
+    - .need()
+```
+
+Every piece of .need are synchronously resolved in every routing level.
+In this case above we make sure to resolve fetchTheme() before fetchPosts()
+PS: Same bahevior server-side/client-side
+
+```js
+// ./containers/App.js:37
+App.need = ({ dispatch }, { params, query }) => [ // eslint-disable-line
+  dispatch(fetchTheme(params)),
+];
+
+// ./containers/PostListPage.js:74
+PostListPage.need = ({ dispatch }, { params, query }) => [
+  dispatch(fetchPosts(params, query)),
+  dispatch(fetchRatings()),
+];
+```
+
+## DataLoader Component (DataLoader.js)
+
+After first-render we need somehow resolve these RouteComponent.need at client-side.
+How? Manually checking for new routes and executing fetchData
+
+```js
+// DataLoader.js:57
+if (navigated) {
+  const { store } = this.context; // eslint-disable-line
+  fetchData(store, this.props.location.pathname); // eslint-disable-line
+}
+```
 
 # Dependencies
-* Webpack
-* React + Redux
-* [Razzle Universal Webpack Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle)
-* [react-router](https://github.com/ReactTraining/react-router) - Declarative routing for React v4 :(. (TODO: Remove)
+- Core
+* Webpack 4
+* React/Redux
+* [react-router](https://github.com/ReactTraining/react-router) - Declarative routing for React v4.
+* [Razzle Lib](https://github.com/jaredpalmer/razzle/tree/master/packages/razzle) - SSR Webpack dirty job
+* [Loadable Component](https://www.smooth-code.com/open-source/loadable-components/) - Code Splitting/Lazy Loading
+
+- Optional
 * [classnames](https://github.com/JedWatson/classnames) - A simple JavaScript utility for conditionally joining classNames together.
 * [revalidator](https://github.com/flatiron/revalidator) - JSON schema validator
 * [moment](https://github.com/moment/moment) - A lightweight JavaScript date library for parsing, validating, manipulating, and formatting dates.
@@ -62,12 +115,8 @@ open http://localhost:5000
 * [isomorphic-boilerplate](https://github.com/mtmr0x/isomorphic-boilerplate)
 * [atomic react](https://github.com/diegohaz/arc)
 * [react-router guide](https://reacttraining.com/react-router/web/example/route-config)
-
-# Patterns / LINT
 * [ESLINT](https://github.com/eslint/eslint)
 
 # TODOS:
-* Styled component
-* Better routing solution
-* Code Splitting + Lazy Loading
-* Assets critical path
+* Styled component (SSR) - No mistery for this
+* Style critical path in Developtment - (Pretty acceptable right now, in production this is already working because extracted css) 
