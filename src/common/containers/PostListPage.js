@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 // Import Components
 import PostList from '../components/PostList';
-import NavBar from '../components/NavBar';
 
 // Import Actions, Selectors
 import { addPost, fetchPosts, deletePost, getPosts } from '../redux/modules/post';
@@ -54,8 +53,6 @@ class PostListPage extends Component {
   render() {
     return (
       <div className="PostPage">
-        <h1>Post List</h1>
-        <NavBar />
         <label htmlFor="addpost">Add post:
           <input
             name="addpost"
