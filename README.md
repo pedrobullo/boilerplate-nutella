@@ -22,6 +22,9 @@ yarn install
 yarn production
 open http://localhost:5000
 
+# Docker (Production)
+docker-compose up
+open http://localhost:5000
 ```
 
 # Code Splitting
