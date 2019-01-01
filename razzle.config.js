@@ -1,8 +1,10 @@
 // Based on: https://gist.github.com/jaredpalmer/0a91a7bd354b875b913c74f4b16125f7
-const ReactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
-
+const LoadablePlugin = require('@loadable/webpack-plugin');
+const LoadableBabelPlugin = require('@loadable/babel-plugin');
+const babelPresetRazzle = require('razzle/babel');
 const autoprefixer = require('autoprefixer');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+const path = require('path');
 
 module.exports = {
   modify: (baseConfig, { target, dev }, webpack) => {
@@ -75,17 +77,14 @@ module.exports = {
     }
 
     if (target === 'web') {
+      const filename = path.resolve(__dirname, 'build/loadable-stats.json'); 
+
       appConfig.plugins = [
         ...appConfig.plugins,
-        new ReactLoadablePlugin({
-          filename: './build/react-loadable.json',
-        }),
-        new webpack.optimize.LimitChunkCountPlugin({
-          maxChunks: Infinity,
-        })
+        new LoadablePlugin({ writeToDisk: true, filename }),
       ];
     }
 
     return appConfig
-  }
+  },
 }

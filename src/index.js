@@ -1,6 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import Loadable from 'react-loadable';
 
 import * as clientConfig from './common/config';
 
@@ -27,15 +26,12 @@ if (module.hot) {
 
 const PORT = clientConfig.application.port || 3000;
 
-export default Loadable.preloadAll()
-.then(() => {
-  express()
-    .use((req, res) => server.handle(req, res))
-    .listen(PORT, (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log(`🤰 Running at: http://localhost:/${PORT}.`);
-    });
-})
+export default express()
+  .use((req, res) => server.handle(req, res))
+  .listen(PORT, (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log(`🤰 Running at: http://localhost:/${PORT}.`);
+  });

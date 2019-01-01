@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 // Import Components
 import PostList from '../components/PostList';
+import NavBar from '../components/NavBar';
 
 // Import Actions, Selectors
 import { addPost, fetchPosts, deletePost, getPosts } from '../redux/modules/post';
@@ -54,6 +55,7 @@ class PostListPage extends Component {
     return (
       <div className="PostPage">
         <h1>Post List</h1>
+        <NavBar />
         <label htmlFor="addpost">Add post:
           <input
             name="addpost"
@@ -72,8 +74,8 @@ class PostListPage extends Component {
 
 // Actions required to provide didMount data for this component to render in SSR.
 // Must return array. See more at common/lib/Dataloader.fetchData.
-PostListPage.need = ({ dispatch }, { params }) => [
-  dispatch(fetchPosts(params)),
+PostListPage.need = ({ dispatch }, { params, query }) => [
+  dispatch(fetchPosts(params, query)),
   console.log('need: Random dispatch from PostListPage'),
 ];
 

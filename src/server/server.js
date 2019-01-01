@@ -31,7 +31,7 @@ app.use((_, res, next) => {
   res.header('Cache-Control', 'no-cache, private');
   next();
 });
-app.use(Express.static(process.env.RAZZLE_PUBLIC_DIR || 'public'));
+app.use(Express.static(process.env.RAZZLE_PUBLIC_DIR));
 app.use(appRouting);
 
 export default app;
