@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { renderRoutes as renderSubRoutes } from 'react-router-config';
-import { Link } from 'react-router-dom';
+
+import NavBar from '../../components/NavBar';
 
 import styles from './App.scss';
 
@@ -23,10 +24,7 @@ const App = props => (
         },
       ]} />
     <h1>APP</h1>
-    <div className={styles.navbar}>
-      <Link className={styles.link} to="/">Home</Link>
-      <Link className={styles.link} to="/posts">Post list</Link>
-    </div>
+    <NavBar />
     <div className={styles.content}>
       { renderSubRoutes(props.route.routes) }
     </div>

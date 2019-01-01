@@ -34,9 +34,9 @@ const posts = [
 
 export const callApiTest = x => new Promise(resolve => setTimeout(() => resolve(x), 200));
 
-export const fetchPosts = (params) => dispatch => {
-  console.log('Fetching Posts', params);
-  return callApiTest(posts, '/api/posts', 'get')
+export const fetchPosts = (params, query) => dispatch => {
+  console.log('Fetching Posts:', 'params', params, 'query', query);
+  return callApiTest(posts, '/api/posts', 'get') // TODO: API call with params/query
     .then(res => dispatch(addPosts(res)));
 }
 

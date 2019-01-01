@@ -6,15 +6,15 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { getCookiesMiddleware } from 'redux-cookies';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { Capture } from 'react-loadable';
-import { getBundles } from 'react-loadable/webpack';
+import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
+import path from 'path';
 
 import appLog from './../appLogs';
 import renderHTML from './template';
 import DataLoader, { fetchData } from './../../../common/lib/DataLoader';
 import rootReducer from '../../../common/redux/reducers';
 
-import stats from '../../../../build/react-loadable.json';
+const statsFile = path.resolve('./build/loadable-stats.json');
 
 export default function appRouting(req, res) {
   const context = {};
@@ -27,30 +27,25 @@ export default function appRouting(req, res) {
   );
 
   const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+  const extractor = new ChunkExtractor({ statsFile, entrypoints: ['client'] });
 
   return fetchData(store, req.url)
     .then(() => {
-      const modules = [];
       const componentHTML = renderToString(
         <Provider store={store}>
-          <Capture report={moduleName => modules.push(moduleName)}>
+          <ChunkExtractorManager extractor={extractor}>
             <StaticRouter location={req.url} context={context}>
               <DataLoader />
             </StaticRouter>
-          </Capture>
+          </ChunkExtractorManager>
         </Provider>,
       );
-
-      const bundles = getBundles(stats, modules);
-      const chunks = bundles.filter(bundle => typeof bundle === 'object' && bundle.file.endsWith('.js'));
-      const styles = bundles.filter(bundle => typeof bundle === 'object' && bundle.file.endsWith('.css'));
 
       const html = renderHTML(
         componentHTML,
         store.getState(),
         assets,
-        chunks,
-        styles
+        extractor,
       );
       return { html };
     })

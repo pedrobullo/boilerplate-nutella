@@ -1,13 +1,8 @@
 {
   "presets": [
-    "razzle/babel",
-    "env",
-    "stage-0",
-    "react"
-   ],
+    "razzle/babel"
+  ],
   "plugins": [
-    "syntax-dynamic-import",
-    "dynamic-import-node",
-    "react-loadable/babel"
+    "@loadable/babel-plugin"
   ]
 }

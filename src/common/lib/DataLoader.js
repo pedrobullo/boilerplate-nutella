@@ -6,24 +6,30 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 
 import routes from '../routes';
 
+const parseQueryString = path => {
+  const queryString = path.split('?');
+  if (queryString[1]) {
+    return JSON.parse(`{"${decodeURI(queryString[1]).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"')}"}`);
+  }
+  return {};
+}
+
 // fetchData .need syntax:
-// Component.need = ({ dispatch }, { params }) => [dispatch1(params), dispatch2(params)...]
+// Component.need = ({ dispatch }, { params, query }) => [dispatch1(params), dispatch2(params)...]
 export const fetchData = (store, location) => {
   const branch = matchRoutes(routes, location);
 
   const sequence = async (branches) => {
     for (const _branch of branches) {
       const { route, match } = _branch;
+      const locationParams = {
+        params: match.params,
+        query: parseQueryString(location),
+      };
 
-      if (((route || {}).component || {}).need) {
-        await Promise.all(route.component.need(store, match));
-      } else if (route.component.preload) {
-        await route.component.preload() // Lazy preload (react-loadable)
-          .then(component => {
-            if (component.default.need) {
-              return Promise.all(component.default.need(store, match));
-            }
-          })
+      const need = ((route.component || {}).WrappedComponent || {}).need
+      if (need) {
+        await Promise.all(need(store, locationParams));
       }
     }
   };
@@ -49,8 +55,8 @@ class DataLoader extends React.Component {
     const navigated = this.props.location !== prevProps.location;
 
     if (navigated) {
-      const { store } = this.context;
-      fetchData(store, this.props.location.pathname);
+      const { store } = this.context; // eslint-disable-line
+      fetchData(store, this.props.location.pathname); // eslint-disable-line
     }
   }
 

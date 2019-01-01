@@ -18,6 +18,8 @@
     "node": ">=8.0.0 <9.0.0"
   },
   "dependencies": {
+    "@loadable/component": "^5.2.2",
+    "@loadable/server": "^5.2.2",
     "@std/esm": "^0.17.3",
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
@@ -29,7 +31,7 @@
     "express": "^4.16.2",
     "moment": "^2.18.1",
     "prop-types": "^15.6.0",
-    "razzle": "^2.4.0",
+    "razzle": "3.0.0-alpha.0",
     "react": "^16.5.2",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
@@ -47,10 +49,14 @@
     "winston": "^2.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/runtime": "^7.2.0",
+    "@loadable/babel-plugin": "^5.2.2",
+    "@loadable/webpack-plugin": "^5.2.2",
     "autoprefixer": "^7.2.2",
     "babel-plugin-dynamic-import-node": "^2.2.0",
+    "babel-plugin-dynamic-import-webpack": "^1.1.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^1.0.0",
     "eslint": "^4.11.0",
     "eslint-loader": "^1.9.0",
