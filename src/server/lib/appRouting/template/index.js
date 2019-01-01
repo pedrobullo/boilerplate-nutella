@@ -1,5 +1,6 @@
 import Helmet from 'react-helmet';
 
+// Currently we dont use asset.javascript from razzle. We already do it with loadable.
 function getAssets(assets = {}) {
   if (assets.client) {
     return ({
@@ -18,6 +19,7 @@ function renderHTML(
   html,
   initialState = {},
   assets = {},
+  extractor,
 ) {
   const head = Helmet.renderStatic();
   const _assets = getAssets(assets);
@@ -32,6 +34,8 @@ function renderHTML(
     ${head.meta.toString()}
     ${head.link.toString()}
     ${head.script.toString()}
+    ${extractor.getLinkTags()}
+    ${extractor.getStyleTags()}
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
     ${_assets.style}
   </head>
@@ -40,7 +44,7 @@ function renderHTML(
     <script>
       window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
     </script>
-    ${_assets.javascript}
+    ${extractor.getScriptTags()}
   </body>
 </html>
     `;

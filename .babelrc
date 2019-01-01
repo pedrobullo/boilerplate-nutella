@@ -1,9 +1,8 @@
 {
   "presets": [
-    "razzle/babel",
-   ],
+    "razzle/babel"
+  ],
   "plugins": [
-    "@loadable/babel-plugin",
-    "dynamic-import-node"
+    "@loadable/babel-plugin"
   ]
 }

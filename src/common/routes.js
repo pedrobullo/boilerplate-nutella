@@ -1,7 +1,5 @@
 import loadable from '@loadable/component';
 
-const loadComponent = page => loadable(() => import(`${page}`));
-
 // Server-Side Fetching will run synchronously each route nest level
 // posts <---- prefetch A 
 // -- postList <---- has prefetch A, prefetch B
@@ -10,7 +8,7 @@ const loadComponent = page => loadable(() => import(`${page}`));
 export default [
   {
     path: '/',
-    component: loadComponent('./containers/App'),
+    component: loadable(() => import('./containers/App')),
     exact: true,
   },
   {
@@ -22,5 +20,7 @@ export default [
       // Remember to add NotFound each end of branch
     ]
   },
-  { component: loadComponent('./components/NotFound') },
+  {
+    component: loadable(() => import('./components/NotFound')),
+  },
 ];

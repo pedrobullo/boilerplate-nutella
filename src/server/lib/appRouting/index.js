@@ -27,7 +27,7 @@ export default function appRouting(req, res) {
   );
 
   const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
-  const extractor = new ChunkExtractor({ statsFile, entrypoints: ['client', 'server'] });
+  const extractor = new ChunkExtractor({ statsFile, entrypoints: ['client'] });
 
   return fetchData(store, req.url)
     .then(() => {
@@ -41,18 +41,11 @@ export default function appRouting(req, res) {
         </Provider>,
       );
 
-      try {
-      const scriptTags = extractor.getScriptElements();// or extractor.getScriptElements();
-      console.log('aaa', scriptTags)
-      } catch(e) {
-        console.log(e);
-      }
-
       const html = renderHTML(
         componentHTML,
         store.getState(),
         assets,
-        // extractor,
+        extractor,
       );
       return { html };
     })
