@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // Import Components
-import PostList from '../components/PostList';
+import PostList from '../../components/PostList';
 
 // Import Actions, Selectors
-import { addPost, fetchPosts, deletePost, getPosts } from '../redux/modules/post';
+import { addPost, fetchPosts, deletePost, getPosts } from '../../redux/modules/post';
 
 const styleInput = {
   width: '100%',
@@ -15,14 +15,34 @@ const styleInput = {
   fontSize: '20px',
 };
 
-class PostListPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      title: '',
-    };
+class Posts extends Component {
+  static propTypes = {
+    posts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        slug: PropTypes.string.isRequired,
+        dateAdded: PropTypes.number.isRequired,
+      })).isRequired,
+    addPost: PropTypes.func.isRequired,
+    deletePost: PropTypes.func.isRequired,
   }
+
+  static contextTypes = {
+    router: PropTypes.object,
+  };
+
+  // Actions required to provide didMount data for this component to render in SSR.
+  // Must return array. See more at common/lib/Dataloader.fetchData.
+  static need = ({ dispatch }, { params, query }) => [
+    dispatch(fetchPosts(params, query)),
+    console.log('need: Random dispatch from Posts container'),
+  ];
+
+  state = {
+    title: '',
+  };
 
   onChange = event => this.setState({ title: event.target.value });
 
@@ -69,13 +89,6 @@ class PostListPage extends Component {
   }
 }
 
-// Actions required to provide didMount data for this component to render in SSR.
-// Must return array. See more at common/lib/Dataloader.fetchData.
-PostListPage.need = ({ dispatch }, { params, query }) => [
-  dispatch(fetchPosts(params, query)),
-  console.log('need: Random dispatch from PostListPage'),
-];
-
 // Retrieve data from store as props
 const mapStateToProps = state => ({
   posts: getPosts(state),
@@ -86,21 +99,7 @@ const mapDispatchToProps = {
   deletePost,
 };
 
-PostListPage.propTypes = {
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-      slug: PropTypes.string.isRequired,
-      dateAdded: PropTypes.number.isRequired,
-    })).isRequired,
-  addPost: PropTypes.func.isRequired,
-  deletePost: PropTypes.func.isRequired,
-};
-
-PostListPage.contextTypes = {
-  router: PropTypes.object,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostListPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Posts);

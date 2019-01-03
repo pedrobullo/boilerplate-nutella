@@ -73,8 +73,8 @@ App.need = ({ dispatch }, { params, query }) => [ // eslint-disable-line
   dispatch(fetchTheme(params)),
 ];
 
-// ./containers/PostListPage.js:74
-PostListPage.need = ({ dispatch }, { params, query }) => [
+// ./containers/Posts/index.js:74
+Posts.need = ({ dispatch }, { params, query }) => [
   dispatch(fetchPosts(params, query)),
   dispatch(fetchRatings()),
 ];

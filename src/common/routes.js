@@ -15,7 +15,7 @@ export default [
     routes: [
       {
         path: '/posts',
-        component: loadable(() => import('./containers/PostListPage')),
+        component: loadable(() => import('./containers/Posts')),
         exact: true,
       },
       { component: loadable(() => import('./components/NotFound')) },

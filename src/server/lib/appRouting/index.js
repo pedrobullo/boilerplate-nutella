@@ -22,7 +22,10 @@ export default function appRouting(req, res) {
   const store = createStore(
     rootReducer,
     compose(
-      applyMiddleware(thunk, getCookiesMiddleware(cookies)),
+      applyMiddleware(
+        thunk,
+        getCookiesMiddleware(cookies),
+      ),
     )
   );
 
@@ -38,7 +41,7 @@ export default function appRouting(req, res) {
               <DataLoader />
             </StaticRouter>
           </ChunkExtractorManager>
-        </Provider>,
+        </Provider>
       );
 
       const html = renderHTML(
