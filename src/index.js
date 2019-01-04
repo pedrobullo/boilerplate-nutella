@@ -33,5 +33,5 @@ export default express()
       console.error(err);
       return;
     }
-    console.log(`🤰 Running at: http://localhost:/${PORT}.`);
+    console.log(`🤰 Running at: http://localhost:${PORT}/.`);
   });
