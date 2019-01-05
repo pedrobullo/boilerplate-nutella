@@ -1,4 +1,10 @@
-import loadable from '@loadable/component';
+import loadable from 'react-loadable';
+
+const loading = () => null;
+
+const App = loadable({ loader: () => import('./containers/App'), loading }) ;
+const Posts = loadable({ loader: () => import('./containers/Posts'), loading });
+const NotFound = loadable({ loader: () => import('./components/NotFound'), loading });
 
 // Server-Side Fetching will run synchronously each route nest level
 // posts <---- prefetch A 
@@ -8,18 +14,18 @@ import loadable from '@loadable/component';
 export default [
   {
     path: '/',
-    component: loadable(() => import('./containers/App')),
+    component: App,
 
     // You can add subroutes
     // Remember to add NotFound each end of branch
     routes: [
       {
         path: '/posts',
-        component: loadable(() => import('./containers/PostListPage')),
+        component: Posts,
         exact: true,
       },
-      { component: loadable(() => import('./components/NotFound')) },
+      { component: NotFound },
     ]
   },
-  { component: loadable(() => import('./components/NotFound')) },
+  { component: NotFound },
 ];

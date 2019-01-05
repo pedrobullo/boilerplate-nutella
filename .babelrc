@@ -3,6 +3,6 @@
     "razzle/babel"
   ],
   "plugins": [
-    "@loadable/babel-plugin"
+    "react-loadable/babel"
   ]
 }

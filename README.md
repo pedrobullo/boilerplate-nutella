@@ -32,7 +32,10 @@ open http://localhost:5000
 This feature allows you to split your code into various bundles which can then be loaded on demand or in parallel. - Webpack
 Why? Code-splitting forces you to think modular-first, your first-render bundle size surely will get a huge drop.
 
-The magic: [Loadable Component](https://www.smooth-code.com/open-source/loadable-components/)
+The magic: [react-loadable](https://github.com/jamiebuilds/react-loadable)
+
+Target: [Loadable Component](https://www.smooth-code.com/open-source/loadable-components/).
+Currently they dont have a way to access Component.need directly [(link to issue)](https://github.com/smooth-code/loadable-components/issues/128#issuecomment-434683737), our approach doesnt work :(, so we cant use right now.
 
 # Razzle
 Razzle is a tool that abstracts all complex configuration needed for SSR into a single dependency--giving you the awesome developer experience of create-react-app, but then leaving the rest of your app's architectural decisions about frameworks, routing, and data fetching up to you.
@@ -68,13 +71,13 @@ In this case above we make sure to resolve fetchTheme() before fetchPosts()
 PS: Same bahevior server-side/client-side
 
 ```js
-// ./containers/App.js:37
-App.need = ({ dispatch }, { params, query }) => [ // eslint-disable-line
+// ./containers/App.js:18
+static need = ({ dispatch }, { params, query }) => [
   dispatch(fetchTheme(params)),
 ];
 
-// ./containers/PostListPage.js:74
-PostListPage.need = ({ dispatch }, { params, query }) => [
+// ./containers/Posts/index.js:32
+static need = ({ dispatch }, { params, query }) => [
   dispatch(fetchPosts(params, query)),
   dispatch(fetchRatings()),
 ];
@@ -86,7 +89,7 @@ After first-render we need somehow resolve these RouteComponent.need at client-s
 How? Manually checking for new routes and executing fetchData
 
 ```js
-// DataLoader.js:57
+// DataLoader.js:64
 if (navigated) {
   const { store } = this.context; // eslint-disable-line
   fetchData(store, this.props.location.pathname); // eslint-disable-line

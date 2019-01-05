@@ -6,15 +6,15 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { getCookiesMiddleware } from 'redux-cookies';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
-import path from 'path';
+import { Capture } from 'react-loadable';
+import { getBundles } from 'react-loadable/webpack';
 
 import appLog from './../appLogs';
 import renderHTML from './template';
 import DataLoader, { fetchData } from './../../../common/lib/DataLoader';
 import rootReducer from '../../../common/redux/reducers';
 
-const statsFile = path.resolve('./build/loadable-stats.json');
+import stats from '../../../../build/react-loadable.json';
 
 export default function appRouting(req, res) {
   const context = {};
@@ -22,30 +22,36 @@ export default function appRouting(req, res) {
   const store = createStore(
     rootReducer,
     compose(
-      applyMiddleware(thunk, getCookiesMiddleware(cookies)),
+      applyMiddleware(
+        thunk,
+        getCookiesMiddleware(cookies),
+      ),
     )
   );
 
   const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
-  const extractor = new ChunkExtractor({ statsFile, entrypoints: ['client'] });
+  const modules = [];
 
   return fetchData(store, req.url)
     .then(() => {
       const componentHTML = renderToString(
         <Provider store={store}>
-          <ChunkExtractorManager extractor={extractor}>
+          <Capture report={moduleName => modules.push(moduleName)}>
             <StaticRouter location={req.url} context={context}>
               <DataLoader />
             </StaticRouter>
-          </ChunkExtractorManager>
-        </Provider>,
+          </Capture>
+        </Provider>
       );
+
+      const bundles = getBundles(stats, modules);
+      const chunks = bundles.filter(bundle => typeof bundle === 'object' && bundle.file.endsWith('.js'));
 
       const html = renderHTML(
         componentHTML,
         store.getState(),
         assets,
-        extractor,
+        chunks,
       );
       return { html };
     })

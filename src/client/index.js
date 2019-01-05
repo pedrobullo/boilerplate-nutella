@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { hydrate } from 'react-dom';
-import { loadableReady } from '@loadable/component';
+import Loadable from 'react-loadable';
 
 import DataLoader from '../common/lib/DataLoader';
 
@@ -12,7 +12,7 @@ import configureStore from '../common/redux/store';
 const store = configureStore(window.__INITIAL_STATE__);
 const mountApp = document.getElementById('app');
 
-loadableReady(() => {
+Loadable.preloadReady().then(() => {
   hydrate(
     <Provider store={store}>
       <BrowserRouter>
