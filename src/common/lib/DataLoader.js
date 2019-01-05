@@ -27,12 +27,19 @@ export const fetchData = (store, location) => {
         query: parseQueryString(location),
       };
 
-      const need = ((route.component || {}).WrappedComponent || {}).need
-      if (need) {
-        await Promise.all(need(store, locationParams));
+      if ((route.component || {}).need) {
+        await Promise.all(route.component.need(store, locationParams));
+      } else if (route.component.preload) {
+        await route.component.preload() // Lazy preload (react-loadable)
+          .then(component => {
+            if (component.default.need) {
+              return Promise.all(component.default.need(store, locationParams));
+            }
+          })
       }
     }
   };
+
   return sequence(branch);
 };
 
