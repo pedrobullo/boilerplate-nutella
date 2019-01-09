@@ -45,13 +45,12 @@ export default function appRouting(req, res) {
       );
 
       const bundles = getBundles(stats, modules);
-      const chunks = bundles.filter(bundle => typeof bundle === 'object' && bundle.file.endsWith('.js'));
 
       const html = renderHTML(
         componentHTML,
         store.getState(),
         assets,
-        chunks,
+        bundles,
       );
       return { html };
     })

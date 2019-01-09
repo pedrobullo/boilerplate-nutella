@@ -11,3 +11,4 @@ build
 public/static
 webpack-assets.json
 webpack-stats.json
+.history
