@@ -43,7 +43,6 @@ export const fetchData = (store, location) => {
   return sequence(branch);
 };
 
-
 /*
 DataLoader: https://www.npmjs.com/package/react-router-config
 */
@@ -58,12 +57,16 @@ class DataLoader extends React.Component {
     location: PropTypes.object.isRequired,
   };
 
+  _getFullLocation = location => [location.pathname, location.search].filter(String).join('/');
+
   componentDidUpdate(prevProps) {
-    const navigated = this.props.location !== prevProps.location;
+    const currentLocation = this._getFullLocation(this.props.location);
+    const prevLocation = this._getFullLocation(prevProps.location);
+    const navigated = currentLocation !== prevLocation;
 
     if (navigated) {
-      const { store } = this.context; // eslint-disable-line
-      fetchData(store, this.props.location.pathname); // eslint-disable-line
+      const { store } = this.context;
+      fetchData(store, currentLocation);
     }
   }
 
