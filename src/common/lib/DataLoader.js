@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { matchRoutes, renderRoutes } from 'react-router-config';
+import { ReactReduxContext } from 'react-redux';
 
 import routes from '../routes';
 
@@ -49,9 +50,7 @@ DataLoader: https://www.npmjs.com/package/react-router-config
 class DataLoader extends React.Component {
   static displayName = 'DataLoader';
 
-  static contextTypes = {
-    store: PropTypes.object
-  }
+  static contextType = ReactReduxContext; // Legacy context workaround
 
   static propTypes = {
     location: PropTypes.object.isRequired,

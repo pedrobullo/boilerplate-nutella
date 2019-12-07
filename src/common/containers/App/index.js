@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { renderRoutes as renderSubRoutes } from 'react-router-config';
 
 import NavBar from '../../components/NavBar';

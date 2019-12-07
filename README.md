@@ -10,6 +10,8 @@ Boilerplate Nutella
 # Goal
 Clean environment, Code Splitting and Server-Side Rendering (Isomorphic/Universal) architecture ~~with lot sugar~~
 
+Hooks ready.
+
 # Installation
 ```
 # Development
@@ -125,4 +127,4 @@ if (navigated) {
 
 # TODOS:
 * Styled component (SSR) - No mistery for this
-* Style critical path in Developtment - (Pretty acceptable right now, in production this is already working because extracted css) 
+* Style critical path in Developtment - (Pretty acceptable right now, in production this is already working because extracted css)

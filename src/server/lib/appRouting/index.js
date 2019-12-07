@@ -8,6 +8,7 @@ import { getCookiesMiddleware } from 'redux-cookies';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Capture } from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
+import { HelmetProvider } from 'react-helmet-async';
 
 import appLog from './../appLogs';
 import renderHTML from './template';
@@ -38,7 +39,9 @@ export default function appRouting(req, res) {
         <Provider store={store}>
           <Capture report={moduleName => modules.push(moduleName)}>
             <StaticRouter location={req.url} context={context}>
-              <DataLoader />
+              <HelmetProvider context={context}>
+                <DataLoader />
+              </HelmetProvider>
             </StaticRouter>
           </Capture>
         </Provider>
@@ -51,6 +54,7 @@ export default function appRouting(req, res) {
         store.getState(),
         assets,
         bundles,
+        context,
       );
       return { html };
     })
@@ -66,9 +70,10 @@ export default function appRouting(req, res) {
     .catch((error) => {
       const errorString = JSON.stringify({
         message: `Request in ${req.url} failed.`,
-        response: error,
+        response: error.toString(),
+        stack: error.stack,
       });
-      return appLog.error(errorString);
+      return appLog.error('Error rendering:', errorString);
     });
 }
 

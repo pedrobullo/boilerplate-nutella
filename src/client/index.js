@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { hydrate } from 'react-dom';
 import Loadable from 'react-loadable';
+import { HelmetProvider } from 'react-helmet-async';
 
 import DataLoader from '../common/lib/DataLoader';
 
@@ -16,7 +17,9 @@ Loadable.preloadReady().then(() => {
   hydrate(
     <Provider store={store}>
       <BrowserRouter>
-        <DataLoader />
+        <HelmetProvider>
+          <DataLoader />
+        </HelmetProvider>
       </BrowserRouter>
     </Provider>,
     mountApp,
