@@ -56,7 +56,7 @@
     "extract-css-chunks-webpack-plugin": "3.2.0",
     "jest": "23.6.0",
     "jsdom": "11.2.0",
-    "node-sass": "4.7.2",
+    "node-sass": "4.13.1",
     "nyc": "11.2.1",
     "postcss-loader": "3.0.0",
     "sass-loader": "7.1.0"
